@@ -19,9 +19,14 @@ public class Estudiante_Universidad {
     private Integer dni_estudiante;
 
     private String nombre;
+
     private String apellido;
+
     private String correo;
+
     private String carrera;
+
     private Integer telefono;
+    
 
 }
