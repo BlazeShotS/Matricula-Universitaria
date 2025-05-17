@@ -27,6 +27,7 @@ public class Estudiante_Universidad {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer dni_estudiante;
 
+    
     @NotNull
     @NotBlank(message="Ingrese un nombre")
     @Pattern(regexp = "\\D*",message="No puede contener numeros")

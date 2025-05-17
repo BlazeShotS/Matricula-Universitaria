@@ -20,20 +20,22 @@ public class Estudiante_UniversidadService {
 
 
 
-
+    //Mostrar
     public List <Estudiante_Universidad>listarTodas(){
         return repository.findAll();
     }
 
+    //Insertar
     public Estudiante_Universidad insert (Estudiante_Universidad estudiante_Universidad){
         return repository.save(estudiante_Universidad);
     }
 
+    //Buscar por id
     public Estudiante_Universidad ObtenerPorId (Integer  dni_estudiante){
         return repository.findById(dni_estudiante).orElse(null);
     }
 
-
+    //Actualizar
     public Estudiante_Universidad ActualizarEstudianteUniversidad (Integer  dni_estudiante, Estudiante_Universidad estudiante_Universidad){
         if (!repository.existsById(estudiante_Universidad.getDni_estudiante())) {
             throw new RuntimeException("No se encontrol el id "+estudiante_Universidad.getDni_estudiante());
@@ -42,6 +44,7 @@ public class Estudiante_UniversidadService {
                 
     }
 
+    //Eliminar
     public void eliminar (Integer dni_Estudiante){
         repository.deleteById(dni_Estudiante);
     }
