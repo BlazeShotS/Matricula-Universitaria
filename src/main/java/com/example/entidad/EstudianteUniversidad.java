@@ -27,7 +27,7 @@ import lombok.NoArgsConstructor;
 public class EstudianteUniversidad {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer dni_estudiante;
 
     
@@ -52,13 +52,13 @@ public class EstudianteUniversidad {
 
     @NotNull
     @NotBlank(message = "Ingrese telefono")
-    @Pattern(regexp="\\d{9}", message="El telefono debe tener 9 digitos")
-    private Integer telefono;
+    //@Pattern(regexp="\\d{9}", message="El telefono debe tener 9 digitos")
+    private String telefono;
 
     @NotNull
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") 
-    @PastOrPresent(message= "La fecha no puede ser futura")
-    private LocalDateTime fecha_registro;
+    //@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") 
+    //@PastOrPresent(message= "La fecha no puede ser futura")
+    private String fecha_registro;
 
 
     @ManyToOne

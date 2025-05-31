@@ -50,7 +50,7 @@ public class EstudianteSistemaController {
     @DeleteMapping("eliminar/{id}")
     public ResponseEntity <String> eliminarEstudianteSistema (@PathVariable Integer id){
         estudianteSistemaService.eliminar(id);
-        return ResponseEntity.ok("Usuario eliminado correctamente: "+id);
+        return ResponseEntity.ok("Estudiante eliminado de la universidad correctamente: "+id);
     }
 
 }

@@ -38,8 +38,8 @@ public class EstudianteUniversidadController {
     //El dni de estudiante seria mi id
     //Para buscar por id
     @GetMapping("lista/{dni}")
-     public EstudianteUniversidad selectEstudianteUniversidadId (@PathVariable Integer idestudianteUniversidad){
-        return service.ObtenerPorDni(idestudianteUniversidad);
+     public EstudianteUniversidad selectEstudianteUniversidadId (@PathVariable Integer dni){
+        return service.ObtenerPorDni(dni);
     }
 
     //Para insertar
@@ -49,17 +49,17 @@ public class EstudianteUniversidadController {
     }
  
     //Para actualizar
-    @PutMapping("actualizar/{dni}")
-    public EstudianteUniversidad actualizarEstudianteUniversidad (@PathVariable Integer idestudianteUniversidad, @RequestBody EstudianteUniversidad estudiante_Universidad) {
-        estudiante_Universidad.setDni_estudiante(idestudianteUniversidad);
-        return service.Actualizar(idestudianteUniversidad, estudiante_Universidad);
+    @PutMapping("actualizar/{dni}")  //La url dni tiene que ir lo mismo en mi @PathVariable dni
+    public EstudianteUniversidad actualizarEstudianteUniversidad (@PathVariable Integer dni, @RequestBody EstudianteUniversidad estudiante_Universidad) {
+        estudiante_Universidad.setDni_estudiante(dni);
+        return service.Actualizar(dni, estudiante_Universidad);
     }
 
     //Para eliminar
-    @DeleteMapping("eliminar/{dni}")
-    public ResponseEntity <String> eliminarEstudianteUniversidad (@PathVariable Integer idestudianteUniversidad){
-        service.eliminar(idestudianteUniversidad);
-        return ResponseEntity.ok("Estudiante de universidad eliminado con exito de id: "+idestudianteUniversidad);
+    @DeleteMapping("eliminar/{dni}") //La url dni tiene que ir lo mismo en mi @PathVariable dni
+    public ResponseEntity <String> eliminarEstudianteUniversidad (@PathVariable Integer dni){
+        service.eliminar(dni);
+        return ResponseEntity.ok("Estudiante que averiguo info de la universidad eliminado con exito de id: "+dni);
     }
 
     

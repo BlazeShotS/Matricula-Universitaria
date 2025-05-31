@@ -23,12 +23,12 @@ import util.Rol;
 public class EstudianteSistema {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer codigo_estudiante;
 
     @NotNull
-    @NotBlank(message="Ingrese un correo") 
-    private String correo;
+    @NotBlank(message="Ingrese un correo estudiantil") 
+    private String correo_estudiante;
 
     @NotNull
     @NotBlank(message="Ingrese una contraseña")
