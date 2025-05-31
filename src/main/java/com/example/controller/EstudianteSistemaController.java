@@ -13,6 +13,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+
 
 
 
@@ -31,10 +34,15 @@ public class EstudianteSistemaController {
     
     @PostMapping("insertar")
     public EstudianteSistema insertarEstudianteSistema(@RequestBody EstudianteSistema estudianteSistema) {
-        return estudianteSistemaService.insertar(estudianteSistema);
+        return estudianteSistemaService.insertEstudianteSistema(estudianteSistema);
     }
 
 
+    @PutMapping("actualizar/{id}")
+    public EstudianteSistema updateEstudianteSistema (@PathVariable Integer id, @RequestBody EstudianteSistema estudianteSistema) {
+        estudianteSistema.setCodigo_estudiante(id);
+        return estudianteSistemaService.updateEstudianteSistema(id, estudianteSistema);
+    }
     
 
 

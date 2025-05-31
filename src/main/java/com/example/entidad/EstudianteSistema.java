@@ -1,5 +1,6 @@
 package com.example.entidad;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -11,6 +12,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import util.Rol;
 
 @Entity
 @Data
@@ -33,5 +35,10 @@ public class EstudianteSistema {
     @OneToOne
     @JoinColumn (name = "dni_estudiante")
     private EstudianteUniversidad estudiante_Universidad;
+
+    @Column(nullable = false)
+    @NotNull(message = "Ingrese rol")
+    private Rol rol;
+
 
 }

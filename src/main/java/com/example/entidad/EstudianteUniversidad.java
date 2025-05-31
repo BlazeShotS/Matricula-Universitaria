@@ -3,12 +3,15 @@ package com.example.entidad;
 
 import java.time.LocalDateTime;
 
+import org.hibernate.annotations.ManyToAny;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
@@ -48,12 +51,19 @@ public class EstudianteUniversidad {
     private String carrera;
 
     @NotNull
+    @NotBlank(message = "Ingrese telefono")
+    @Pattern(regexp="\\d{9}", message="El telefono debe tener 9 digitos")
     private Integer telefono;
 
     @NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") 
     @PastOrPresent(message= "La fecha no puede ser futura")
     private LocalDateTime fecha_registro;
+
+
+    @ManyToOne
+    @JoinColumn (name="id_usuario")
+    private Usuario usuario;
     
 
 }

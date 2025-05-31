@@ -19,7 +19,7 @@ public class EstudianteSistemaService {
         return estudianteSistemaRepository.findAll();
     }
 
-    public EstudianteSistema insertar (EstudianteSistema estudianteSistema){
+    public EstudianteSistema insertEstudianteSistema (EstudianteSistema estudianteSistema){
         return estudianteSistemaRepository.save(estudianteSistema);
     }
 
@@ -27,14 +27,14 @@ public class EstudianteSistemaService {
         return estudianteSistemaRepository.findById(codigo_estudiante).orElseThrow();
     }
 
-    public EstudianteSistema actualizarEstudianteSistema (EstudianteSistema estudianteSistema){
+    public EstudianteSistema updateEstudianteSistema (Integer codigo_estudiante, EstudianteSistema estudianteSistema){
         if (!estudianteSistemaRepository.existsById(estudianteSistema.getCodigo_estudiante())) {
             throw new RuntimeException("No se encontro el id "+estudianteSistema.getCodigo_estudiante());                        
         }
         return estudianteSistemaRepository.save(estudianteSistema);
     }
 
-    public void eliminar (Integer codigo_estudiante){
+    public void deleteEstudianteSistema (Integer codigo_estudiante){
         estudianteSistemaRepository.deleteById(codigo_estudiante);
     }
 

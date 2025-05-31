@@ -3,5 +3,6 @@ package util;
 public enum Rol {
 
     ADMIN,
-    RECEP; //recepcionista
+    RECEP, //recepcionista
+    ESTUDI
 }
