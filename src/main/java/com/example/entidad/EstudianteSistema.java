@@ -5,6 +5,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -22,13 +23,14 @@ public class EstudianteSistema {
     private Integer codigo_estudiante;
 
     @NotNull
-    @NotBlank(message="Ingrese un correo")
+    @NotBlank(message="Ingrese un correo") 
     private String correo;
 
     @NotNull
     @NotBlank(message="Ingrese una contraseña")
     private String password;
 
+    @OneToOne
     @JoinColumn (name = "dni_estudiante")
     private EstudianteUniversidad estudiante_Universidad;
 
