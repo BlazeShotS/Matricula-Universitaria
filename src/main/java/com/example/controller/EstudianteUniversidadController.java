@@ -35,29 +35,29 @@ public class EstudianteUniversidadController {
         return service.listarTodas();
     }
 
-    //Para insertar
-    @PostMapping("insertar")
-    public EstudianteUniversidad insertEstudianteUniversidad (@RequestBody EstudianteUniversidad estudiante_Universidad){
-        return service.insert(estudiante_Universidad);
-    }
-
     //El dni de estudiante seria mi id
     //Para buscar por id
     @GetMapping("lista/{dni}")
      public EstudianteUniversidad selectEstudianteUniversidadId (@PathVariable Integer idestudianteUniversidad){
-        return service.ObtenerPorId(idestudianteUniversidad);
+        return service.ObtenerPorDni(idestudianteUniversidad);
     }
-    
+
+    //Para insertar
+    @PostMapping("insertar")
+    public EstudianteUniversidad insertarEstudianteUniversidad (@RequestBody EstudianteUniversidad estudiante_Universidad){
+        return service.insertar(estudiante_Universidad);
+    }
+ 
     //Para actualizar
     @PutMapping("actualizar/{dni}")
-    public EstudianteUniversidad updateEstudianteUniversidad (@PathVariable Integer idestudianteUniversidad, @RequestBody EstudianteUniversidad estudiante_Universidad) {
+    public EstudianteUniversidad actualizarEstudianteUniversidad (@PathVariable Integer idestudianteUniversidad, @RequestBody EstudianteUniversidad estudiante_Universidad) {
         estudiante_Universidad.setDni_estudiante(idestudianteUniversidad);
-        return service.ActualizarEstudianteUniversidad(idestudianteUniversidad, estudiante_Universidad);
+        return service.Actualizar(idestudianteUniversidad, estudiante_Universidad);
     }
 
     //Para eliminar
     @DeleteMapping("eliminar/{dni}")
-    public ResponseEntity <String> deleteEstudianteUniversidad (@PathVariable Integer idestudianteUniversidad){
+    public ResponseEntity <String> eliminarEstudianteUniversidad (@PathVariable Integer idestudianteUniversidad){
         service.eliminar(idestudianteUniversidad);
         return ResponseEntity.ok("Estudiante de universidad eliminado con exito de id: "+idestudianteUniversidad);
     }

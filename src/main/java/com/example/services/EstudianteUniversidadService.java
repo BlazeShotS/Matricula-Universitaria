@@ -26,17 +26,17 @@ public class EstudianteUniversidadService {
     }
 
     //Insertar
-    public EstudianteUniversidad insert (EstudianteUniversidad estudiante_Universidad){
+    public EstudianteUniversidad insertar (EstudianteUniversidad estudiante_Universidad){
         return repository.save(estudiante_Universidad);
     }
 
     //Buscar por id
-    public EstudianteUniversidad ObtenerPorId (Integer  dni_estudiante){
+    public EstudianteUniversidad ObtenerPorDni (Integer  dni_estudiante){
         return repository.findById(dni_estudiante).orElse(null);
     }
 
     //Actualizar
-    public EstudianteUniversidad ActualizarEstudianteUniversidad (Integer  dni_estudiante, EstudianteUniversidad estudiante_Universidad){
+    public EstudianteUniversidad Actualizar (Integer  dni_estudiante, EstudianteUniversidad estudiante_Universidad){
         if (!repository.existsById(estudiante_Universidad.getDni_estudiante())) {
             throw new RuntimeException("No se encontrol el id "+estudiante_Universidad.getDni_estudiante());
         }

@@ -3,6 +3,7 @@ package com.example.controller;
 import java.util.List;
 
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -10,6 +11,8 @@ import com.example.entidad.EstudianteSistema;
 import com.example.services.EstudianteSistemaService;
 
 import lombok.AllArgsConstructor;
+
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -34,16 +37,20 @@ public class EstudianteSistemaController {
     
     @PostMapping("insertar")
     public EstudianteSistema insertarEstudianteSistema(@RequestBody EstudianteSistema estudianteSistema) {
-        return estudianteSistemaService.insertEstudianteSistema(estudianteSistema);
+        return estudianteSistemaService.insertar(estudianteSistema);
     }
 
 
     @PutMapping("actualizar/{id}")
-    public EstudianteSistema updateEstudianteSistema (@PathVariable Integer id, @RequestBody EstudianteSistema estudianteSistema) {
+    public EstudianteSistema actualizarEstudianteSistema (@PathVariable Integer id, @RequestBody EstudianteSistema estudianteSistema) {
         estudianteSistema.setCodigo_estudiante(id);
-        return estudianteSistemaService.updateEstudianteSistema(id, estudianteSistema);
+        return estudianteSistemaService.actualizar(id, estudianteSistema);
     }
     
-
+    @DeleteMapping("eliminar/{id}")
+    public ResponseEntity <String> eliminarEstudianteSistema (@PathVariable Integer id){
+        estudianteSistemaService.eliminar(id);
+        return ResponseEntity.ok("Usuario eliminado correctamente: "+id);
+    }
 
 }

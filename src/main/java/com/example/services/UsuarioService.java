@@ -23,18 +23,18 @@ public class UsuarioService {
         return usuarioRepository.findById(6).orElseThrow(() -> new RuntimeException("No existe el id: " + id_usuario));
     }
 
-    public Usuario insert (Usuario usuario){
+    public Usuario insertar (Usuario usuario){
         return usuarioRepository.save(usuario);
     }
 
-    public Usuario update (Integer id_usuario , Usuario usuario){
+    public Usuario actualizar (Integer id_usuario , Usuario usuario){
         if (!usuarioRepository.existsById(usuario.getId_usuario())) {
             throw new RuntimeException("No se puede actualizar , el usuario no existe");
         }
         return usuarioRepository.save(usuario);
     }
 
-    public void delete(Integer id_usuario){
+    public void eliminar(Integer id_usuario){
         if (!usuarioRepository.existsById(id_usuario)) {
             throw new RuntimeException("El usuario" +id_usuario+"no existe");            
         }

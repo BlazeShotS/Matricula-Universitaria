@@ -41,21 +41,21 @@ public class UsuarioRestController {
     }
 
     @PostMapping("insertar")
-    public Usuario insertUsuario(@RequestBody Usuario usuario) {
-        return usuarioService.insert(usuario);
+    public Usuario insertarUsuario(@RequestBody Usuario usuario) {
+        return usuarioService.insertar(usuario);
     }
 
 
     @PutMapping("actualizar/{id_usuario}")
-    public Usuario updateIdUsuario (@PathVariable Integer id_usuario, @RequestBody Usuario usuario) {
+    public Usuario actualizarUsuario (@PathVariable Integer id_usuario, @RequestBody Usuario usuario) {
         usuario.setId_usuario(id_usuario); //voy a asegurarme que el objeto usuario que viene en el @RequestBody tenga el mismo ID que viene en la URL
-        return usuarioService.update(id_usuario, usuario);
+        return usuarioService.actualizar(id_usuario, usuario);
     }
 
 
     @DeleteMapping(value = "eliminar/{id_usuario}")
-    public ResponseEntity<String> deleteIdUser(@PathVariable Integer id_usuario) {
-        usuarioService.delete(id_usuario);
+    public ResponseEntity<String> eliminarIdUser(@PathVariable Integer id_usuario) {
+        usuarioService.eliminar(id_usuario);
         return ResponseEntity.ok("Usuario eliminado correctamente Id :" + id_usuario);
     }
 

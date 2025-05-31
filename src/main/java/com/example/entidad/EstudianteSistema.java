@@ -2,6 +2,8 @@ package com.example.entidad;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -36,6 +38,7 @@ public class EstudianteSistema {
     @JoinColumn (name = "dni_estudiante")
     private EstudianteUniversidad estudiante_Universidad;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     @NotNull(message = "Ingrese rol")
     private Rol rol;
