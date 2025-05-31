@@ -1,15 +1,20 @@
 package com.example.entidad;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import util.Rol;
 
 @Entity
 @Data
@@ -18,18 +23,25 @@ import lombok.NoArgsConstructor;
 public class EstudianteSistema {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer codigo_estudiante;
 
     @NotNull
-    @NotBlank(message="Ingrese un correo")
-    private String correo;
+    @NotBlank(message="Ingrese un correo estudiantil") 
+    private String correo_estudiante;
 
     @NotNull
     @NotBlank(message="Ingrese una contraseña")
     private String password;
 
+    @OneToOne
+    @JoinColumn (name = "dni_estudiante")
+    private EstudianteUniversidad estudiante_Universidad;
 
-    private Estudiante_Universidad estudiante_Universidad;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    @NotNull(message = "Ingrese rol")
+    private Rol rol;
+
 
 }

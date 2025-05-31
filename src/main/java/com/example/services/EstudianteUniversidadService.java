@@ -4,39 +4,39 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.example.entidad.Estudiante_Universidad;
-import com.example.repositories.Estudiante_UniversidadRepository;
+import com.example.entidad.EstudianteUniversidad;
+import com.example.repositories.EstudianteUniversidadRepository;
 
 
 @Service
-public class Estudiante_UniversidadService {
+public class EstudianteUniversidadService {
 
     //Inyeccion de dependencias por contructor
-    private final Estudiante_UniversidadRepository repository;
+    private final EstudianteUniversidadRepository repository;
 
-    public Estudiante_UniversidadService (Estudiante_UniversidadRepository repository){
+    public EstudianteUniversidadService (EstudianteUniversidadRepository repository){
         this.repository=repository;
     }
 
 
 
     //Mostrar
-    public List <Estudiante_Universidad>listarTodas(){
+    public List <EstudianteUniversidad>listarTodas(){
         return repository.findAll();
     }
 
     //Insertar
-    public Estudiante_Universidad insert (Estudiante_Universidad estudiante_Universidad){
+    public EstudianteUniversidad insertar (EstudianteUniversidad estudiante_Universidad){
         return repository.save(estudiante_Universidad);
     }
 
     //Buscar por id
-    public Estudiante_Universidad ObtenerPorId (Integer  dni_estudiante){
+    public EstudianteUniversidad ObtenerPorDni (Integer  dni_estudiante){
         return repository.findById(dni_estudiante).orElse(null);
     }
 
     //Actualizar
-    public Estudiante_Universidad ActualizarEstudianteUniversidad (Integer  dni_estudiante, Estudiante_Universidad estudiante_Universidad){
+    public EstudianteUniversidad Actualizar (Integer  dni_estudiante, EstudianteUniversidad estudiante_Universidad){
         if (!repository.existsById(estudiante_Universidad.getDni_estudiante())) {
             throw new RuntimeException("No se encontrol el id "+estudiante_Universidad.getDni_estudiante());
         }
