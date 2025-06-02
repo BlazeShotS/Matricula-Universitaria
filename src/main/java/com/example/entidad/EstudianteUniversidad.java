@@ -3,7 +3,6 @@ package com.example.entidad;
 
 import java.time.LocalDateTime;
 
-import org.hibernate.annotations.ManyToAny;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import jakarta.persistence.Entity;
