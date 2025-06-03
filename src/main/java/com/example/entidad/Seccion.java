@@ -37,7 +37,7 @@ public class Seccion {
 
     @ManyToOne
     @JoinColumn(name = "id_profesor")
-    private Profesores Profesores;
+    private Profesores profesores;
 
     @ManyToOne
     @JoinColumn(name = "id_usuario")
