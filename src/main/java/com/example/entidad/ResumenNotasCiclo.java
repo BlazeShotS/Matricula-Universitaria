@@ -38,7 +38,8 @@ public class ResumenNotasCiclo {
     
     @ManyToOne
     @JoinColumn(name = "id_carrera")
-    //@JsonIgnoreProperties({"nombre_carrera"})
+    //@JsonIgnoreProperties({"nombre_carrera"}) //OJO CUANDO HAGA INSERT , COMO RESPUESTA NUNCA SE MOSTRARAN LOS DATOS DEL FK MAS QUE EL ID PORQUE SE INSERTA (A MENOS QUE MODIFIQUE EL CONTROLADOR EL METODO INSERT),
+    //SIN PONER @JsonIgnoreProperties o @JsonIgnore si se muestran los datos del fk en GET y PUT porque una vez insertado internamente si esta bien la relacion de @ManyToOne etc busca esa relacion y une todo esos datos o informacion al hacer un findAll o finById o ExistById etc
     private Carrera carrera;
 
     @ManyToOne
