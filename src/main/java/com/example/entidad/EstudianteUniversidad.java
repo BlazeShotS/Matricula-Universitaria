@@ -3,8 +3,9 @@ package com.example.entidad;
 
 import java.time.LocalDateTime;
 
-import org.hibernate.annotations.ManyToAny;
 import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -14,7 +15,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -63,6 +63,7 @@ public class EstudianteUniversidad {
 
     @ManyToOne
     @JoinColumn (name="id_usuario")
+    //@JsonIgnoreProperties({"nombre", "apellido", "telefono", "correo", "password", "rol"}) //Aca estoy diciendole que los atributos de la entidad Usuario no se mostraran , mas que solo el id, (Pongo todo los atributos menos el id, porque el id si se mostrara)
     private Usuario usuario;
     
 
