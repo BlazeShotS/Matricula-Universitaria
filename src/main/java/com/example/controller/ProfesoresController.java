@@ -11,15 +11,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import com.example.entidad.Carrera;
 import com.example.entidad.Profesores;
 import com.example.services.ProfesoresService;
 
-import jakarta.persistence.Entity;
 import lombok.AllArgsConstructor;
 
-@Entity
+@RestController
 @RequestMapping(value = "api/profesores", produces = MediaType.APPLICATION_JSON_VALUE)
 @AllArgsConstructor
 public class ProfesoresController {
@@ -45,7 +44,7 @@ public class ProfesoresController {
     @DeleteMapping("eliminar/{id}")
     public ResponseEntity <String> eliminarProfesor(@PathVariable Integer id){
         profesoresService.eliminar(id);
-        return ResponseEntity.ok("Carrera eliminado correctamente con Id: "+id);
+        return ResponseEntity.ok("Profesor eliminado correctamente con Id: "+id);
     }
 
 
