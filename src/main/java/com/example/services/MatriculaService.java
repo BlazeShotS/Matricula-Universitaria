@@ -2,18 +2,10 @@ package com.example.services;
 
 import java.util.List;
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
-import com.example.entidad.Carrera;
+
 import com.example.entidad.Matricula;
-import com.example.entidad.Seccion;
 import com.example.repositories.MatriculaRepository;
 
 import lombok.AllArgsConstructor;

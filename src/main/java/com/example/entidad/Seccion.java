@@ -28,7 +28,7 @@ public class Seccion {
     private Curso curso;
 
 
-    private int horario; //Rango 8:30 - 11:30
+    private String horario; //Rango 8:30 - 11:30
 
     @NotNull
     @NotBlank(message = "Ingrese el aula")

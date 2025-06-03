@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.entidad.Matricula;
-import com.example.entidad.Seccion;
 import com.example.services.MatriculaService;
 
 import lombok.AllArgsConstructor;
