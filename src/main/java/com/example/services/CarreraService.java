@@ -2,7 +2,6 @@ package com.example.services;
 
 import java.util.List;
 
-import javax.swing.text.Caret;
 
 import org.springframework.stereotype.Service;
 
@@ -35,7 +34,7 @@ public class CarreraService {
 
     //Ponemos void porque void no devuelve nada, es decir este metodo hace algo pero no se espera una respuesta de el
     public void eliminar (Integer id){
-        if (carreraRepository.existsById(id)) {
+        if (!carreraRepository.existsById(id)) {
             throw new RuntimeException("La carrera con el id: "+id+" no existe");
         }
         carreraRepository.deleteById(id);

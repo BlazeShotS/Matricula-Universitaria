@@ -1,5 +1,7 @@
 package com.example.entidad;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -36,6 +38,7 @@ public class EstudianteSistema {
 
     @OneToOne
     @JoinColumn (name = "dni_estudiante")
+    //@JsonIgnoreProperties(value={"nombre", "apellido", "correo", "carrera", "telefono", "fecha_registro","usuario"})
     private EstudianteUniversidad estudiante_Universidad;
 
     @Enumerated(EnumType.STRING)

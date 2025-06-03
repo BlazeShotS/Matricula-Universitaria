@@ -28,7 +28,7 @@ public class CarreraController {
 
     private final CarreraService carreraService;
 
-    @GetMapping("lista")
+    @GetMapping("listar")
     public List <Carrera> listarCarreras() {
         return carreraService.listar();
     }
@@ -44,8 +44,8 @@ public class CarreraController {
         return carreraService.actualizar(id, carrera);
     }
 
-    @DeleteMapping(value = "eliminar/{id}")
-    public ResponseEntity <String> eliminarCarrera (@PathVariable Integer id){
+    @DeleteMapping("eliminar/{id}")
+    public ResponseEntity <String> eliminarCarrera(@PathVariable Integer id){
         carreraService.eliminar(id);
         return ResponseEntity.ok("Carrera eliminado correctamente con Id: "+id);
     }
