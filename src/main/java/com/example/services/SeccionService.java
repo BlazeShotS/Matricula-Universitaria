@@ -81,7 +81,7 @@ public class SeccionService {
             seccionRepository.save(seccion);
 
         } catch (Exception e) {
-            throw new RuntimeException("Error al crear la matricula");
+            throw new RuntimeException("Error al crear la matricula: " + e.getMessage(), e);
         }
     }
 
