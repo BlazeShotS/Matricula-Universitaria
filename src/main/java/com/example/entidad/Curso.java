@@ -1,6 +1,5 @@
 package com.example.entidad;
 
-import javax.swing.text.Caret;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

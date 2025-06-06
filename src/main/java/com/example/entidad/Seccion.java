@@ -43,4 +43,7 @@ public class Seccion {
     @JoinColumn(name = "id_usuario")
     private Usuario usuario;
 
+    
+    private Integer cupos;
+
 }
