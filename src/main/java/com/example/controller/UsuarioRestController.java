@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.entidad.Usuario;
 import com.example.services.UsuarioService;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -41,13 +42,13 @@ public class UsuarioRestController {
     }
 
     @PostMapping("insertar")
-    public Usuario insertarUsuario(@RequestBody Usuario usuario) {
+    public Usuario insertarUsuario(@Valid @RequestBody Usuario usuario) {
         return usuarioService.insertar(usuario);
     }
 
 
     @PutMapping("actualizar/{id_usuario}")
-    public Usuario actualizarUsuario (@PathVariable Integer id_usuario, @RequestBody Usuario usuario) {
+    public Usuario actualizarUsuario (@Valid @PathVariable Integer id_usuario, @RequestBody Usuario usuario) {
         usuario.setId_usuario(id_usuario); //voy a asegurarme que el objeto usuario que viene en el @RequestBody tenga el mismo ID que viene en la URL
         return usuarioService.actualizar(id_usuario, usuario);
     }
