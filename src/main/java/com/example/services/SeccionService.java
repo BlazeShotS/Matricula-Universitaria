@@ -1,7 +1,6 @@
 package com.example.services;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -57,13 +56,12 @@ public class SeccionService {
         try {
 
             Optional<Seccion> optionalSeccion = seccionRepository.findByAulaAndHorario(info.aula(), info.horario());
-            EstudianteSistema estudiante = estudianteSistemaRepository.findById(info.codigo_estudiante()).orElseThrow(() 
-            -> new IllegalArgumentException("Estudiante no encontrado"));
-
-
-            if (optionalSeccion.isEmpty()) {
+             if (optionalSeccion.isEmpty()) {
                 throw new IllegalArgumentException("Seccion no encontrada");
             }
+
+            EstudianteSistema estudiante = estudianteSistemaRepository.findById(info.codigo_estudiante()).orElseThrow(() 
+            -> new IllegalArgumentException("Estudiante no encontrado"));
 
             Seccion seccion = optionalSeccion.get();
 
