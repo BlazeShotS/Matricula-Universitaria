@@ -57,9 +57,9 @@ public class SeccionService {
         try {
 
             Optional<Seccion> optionalSeccion = seccionRepository.findByAulaAndHorario(info.aula(), info.horario());
+            EstudianteSistema estudiante = estudianteSistemaRepository.findById(info.codigo_estudiante()).orElseThrow(() 
+            -> new IllegalArgumentException("Estudiante no encontrado"));
 
-            EstudianteSistema estudiante = estudianteSistemaRepository.findById(info.codigo_estudiante())
-                    .orElseThrow(() -> new IllegalArgumentException("Estudiante no encontrado"));
 
             if (optionalSeccion.isEmpty()) {
                 throw new IllegalArgumentException("Seccion no encontrada");
@@ -74,7 +74,7 @@ public class SeccionService {
             Matricula matrícula = new Matricula();
             matrícula.setSeccion(seccion);
             matrícula.setFecha_matricula(LocalDate.now());
-
+            matrícula.setEstudianteSistema(estudiante);
             matriculaRepository.save(matrícula);
 
             seccion.setCupos(seccion.getCupos() - 1);
