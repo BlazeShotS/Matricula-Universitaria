@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.entidad.Carrera;
 import com.example.services.CarreraService;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -34,12 +35,12 @@ public class CarreraController {
     }
 
     @PostMapping("insertar")
-    public Carrera insertarCarrera(@RequestBody Carrera carrera) {                
+    public Carrera insertarCarrera(@Valid @RequestBody Carrera carrera) {                
         return carreraService.insertar(carrera);
     }
 
     @PutMapping("actualizar/{id}")
-    public Carrera actualizarCarrera(@PathVariable Integer id, @RequestBody Carrera carrera) {
+    public Carrera actualizarCarrera(@PathVariable Integer id,@Valid @RequestBody Carrera carrera) {
         carrera.setId_carrera(id);
         return carreraService.actualizar(id, carrera);
     }

@@ -24,7 +24,7 @@ public class Carrera {
 
     @NotBlank(message = "Ingrese el nombre de una carrera")
     @Pattern (regexp = "^[A-Za-zÁÉÍÓÚáéíóúÑñ ]+$", message = "No puede contener numeros")
-    @Size(min = 2, max = 50, message = "Ingrese un apellido entre 2 y 50 caracteres")
+    @Size(min = 2, max = 50, message = "Ingrese una carrera entre 2 y 50 caracteres")
     private String nombre_carrera;
 
 }

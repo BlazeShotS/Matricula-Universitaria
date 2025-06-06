@@ -27,14 +27,14 @@ public class Usuario {
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Integer id_usuario;
 
-    @NotBlank(message = "Ingrese Nombre")
+    @NotBlank(message = "Ingrese un Nombre")
     @Pattern(regexp = "^[A-Za-zÁÉÍÓÚáéíóúÑñ ]+$", message = "No puede contener numeros")
     @Size(min = 2, max = 50, message = "Ingrese un nombre entre 2 y 50 caracteres")
     private String nombre;
 
-    @NotBlank(message = "Ingrese Nombre")
+    @NotBlank(message = "Ingrese un apellido")
     @Pattern(regexp = "^[A-Za-zÁÉÍÓÚáéíóúÑñ ]+$", message = "No puede contener numeros")
-    @Size(min = 2, max = 50, message = "Ingrese un nombre entre 2 y 50 caracteres")
+    @Size(min = 2, max = 50, message = "Ingrese un apellido entre 2 y 50 caracteres")
     private String apellido;
 
     @NotBlank(message = "Ingrese telefono")
