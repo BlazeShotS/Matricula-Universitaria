@@ -41,5 +41,10 @@ public class UsuarioService {
         usuarioRepository.deleteById(id_usuario);
     }
 
+    //Para el SPRING SECURITY (seguridad)
+    public Usuario findByCorreo (String correo){
+        return usuarioRepository.findByCorreo(correo).orElseThrow();
+    }
+
 
 }
