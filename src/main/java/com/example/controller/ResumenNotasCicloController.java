@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.entidad.ResumenNotasCiclo;
 import com.example.services.ResumenNotasCicloService;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -36,12 +37,12 @@ public class ResumenNotasCicloController {
     }
     
     @PostMapping("insertar")
-    public ResumenNotasCiclo insertarResumen(@RequestBody ResumenNotasCiclo resumenNotasCiclo) {        
+    public ResumenNotasCiclo insertarResumen(@Valid @RequestBody ResumenNotasCiclo resumenNotasCiclo) {        
         return resumenNotasCicloService.insertar(resumenNotasCiclo);
     }
 
     @PutMapping("actualizar/{id}")
-    public ResumenNotasCiclo actualizarResumen(@PathVariable Integer id, @RequestBody ResumenNotasCiclo resumenNotasCiclo) {
+    public ResumenNotasCiclo actualizarResumen(@PathVariable Integer id,@Valid @RequestBody ResumenNotasCiclo resumenNotasCiclo) {
         resumenNotasCiclo.setId(id);
         return resumenNotasCicloService.actualizar(id, resumenNotasCiclo);
     }

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.entidad.Curso;
 import com.example.services.CursoServices;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
 @RestController
@@ -33,12 +34,12 @@ public class CursoController {
     }
 
     @PostMapping("insertar")
-    public Curso insertarCurso(@RequestBody Curso curso) {                
+    public Curso insertarCurso(@Valid @RequestBody Curso curso) {             
         return cursoServices.insertar(curso);
     }
 
     @PutMapping("actualizar/{id}")
-    public Curso actualizarCurso(@PathVariable Integer id, @RequestBody Curso curso) {
+    public Curso actualizarCurso(@PathVariable Integer id,@Valid @RequestBody Curso curso) {
         curso.setId_curso(id);
         return cursoServices.actualizar(id, curso);
     }

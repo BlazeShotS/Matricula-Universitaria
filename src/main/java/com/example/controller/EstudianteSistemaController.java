@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.entidad.EstudianteSistema;
 import com.example.services.EstudianteSistemaService;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -34,13 +35,13 @@ public class EstudianteSistemaController {
     }
     
     @PostMapping("insertar")
-    public EstudianteSistema insertarEstudianteSistema(@RequestBody EstudianteSistema estudianteSistema) {
+    public EstudianteSistema insertarEstudianteSistema(@Valid @RequestBody EstudianteSistema estudianteSistema) {
         return estudianteSistemaService.insertar(estudianteSistema);
     }
 
 
     @PutMapping("actualizar/{id}")
-    public EstudianteSistema actualizarEstudianteSistema (@PathVariable Integer id, @RequestBody EstudianteSistema estudianteSistema) {
+    public EstudianteSistema actualizarEstudianteSistema (@PathVariable Integer id,@Valid @RequestBody EstudianteSistema estudianteSistema) {
         estudianteSistema.setCodigo_estudiante(id);
         return estudianteSistemaService.actualizar(id, estudianteSistema);
     }

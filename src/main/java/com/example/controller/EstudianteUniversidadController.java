@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.entidad.EstudianteUniversidad;
 import com.example.services.EstudianteUniversidadService;
 
+import jakarta.validation.Valid;
+
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -44,13 +46,13 @@ public class EstudianteUniversidadController {
 
     //Para insertar
     @PostMapping("insertar")
-    public EstudianteUniversidad insertarEstudianteUniversidad (@RequestBody EstudianteUniversidad estudiante_Universidad){
+    public EstudianteUniversidad insertarEstudianteUniversidad (@Valid @RequestBody EstudianteUniversidad estudiante_Universidad){
         return service.insertar(estudiante_Universidad);
     }
  
     //Para actualizar
     @PutMapping("actualizar/{dni}")  //La url dni tiene que ir lo mismo en mi @PathVariable dni
-    public EstudianteUniversidad actualizarEstudianteUniversidad (@PathVariable Integer dni, @RequestBody EstudianteUniversidad estudiante_Universidad) {
+    public EstudianteUniversidad actualizarEstudianteUniversidad (@PathVariable Integer dni,@Valid @RequestBody EstudianteUniversidad estudiante_Universidad) {
         estudiante_Universidad.setDni_estudiante(dni);
         return service.Actualizar(dni, estudiante_Universidad);
     }

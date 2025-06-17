@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.entidad.Matricula;
 import com.example.services.MatriculaService;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
 @RestController
@@ -32,12 +33,12 @@ public class MatriculaController {
     }
 
     @PostMapping("insertar")
-    public Matricula insertarMatricula(@RequestBody Matricula matricula) {                
+    public Matricula insertarMatricula(@Valid @RequestBody Matricula matricula) {                
         return matriculaService.insertar(matricula);
     }
 
     @PutMapping("actualizar/{id}")
-    public Matricula actualizarMatricula(@PathVariable Integer id, @RequestBody Matricula matricula) {
+    public Matricula actualizarMatricula(@PathVariable Integer id,@Valid @RequestBody Matricula matricula) {
         matricula.setId_matricula(id);
         return matriculaService.actualizar(id, matricula);
     }

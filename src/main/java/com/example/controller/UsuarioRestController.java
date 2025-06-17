@@ -48,7 +48,7 @@ public class UsuarioRestController {
 
 
     @PutMapping("actualizar/{id_usuario}")
-    public Usuario actualizarUsuario (@PathVariable Integer id_usuario,@Valid @RequestBody Usuario usuario) {
+    public Usuario actualizarUsuario (@PathVariable Integer id_usuario,@Valid @RequestBody Usuario usuario) { //Poner el @Valid hace que se active la validacion automatica de un objeto (En este caso usuario) segun las anotaciones definidas como @NotBlank @Email @Pattern @Size etc
         usuario.setId_usuario(id_usuario); //voy a asegurarme que el objeto usuario que viene en el @RequestBody tenga el mismo ID que viene en la URL
         return usuarioService.actualizar(id_usuario, usuario);
     }
