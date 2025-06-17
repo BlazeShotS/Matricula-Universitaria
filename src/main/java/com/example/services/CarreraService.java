@@ -18,7 +18,7 @@ public class CarreraService {
 
     public List <Carrera> listar(){
         return carreraRepository.findAll();
-    }
+    }    
 
     public Carrera insertar (Carrera carrera){
         return carreraRepository.save(carrera);

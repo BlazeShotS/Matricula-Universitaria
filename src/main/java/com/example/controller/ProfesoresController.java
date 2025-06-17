@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.entidad.Profesores;
 import com.example.services.ProfesoresService;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
 @RestController
@@ -31,12 +32,12 @@ public class ProfesoresController {
     }
 
     @PostMapping("insertar")
-    public Profesores insertarProfesor(@RequestBody Profesores profesores) {                
+    public Profesores insertarProfesor(@Valid @RequestBody Profesores profesores) {                
         return profesoresService.insertar(profesores);
     }
 
     @PutMapping("actualizar/{id}")
-    public Profesores actualizarProfesor(@PathVariable Integer id, @RequestBody Profesores profesores) {
+    public Profesores actualizarProfesor(@PathVariable Integer id,@Valid @RequestBody Profesores profesores) {
         profesores.setId_profesor(id);
         return profesoresService.actualizar(id, profesores);
     }

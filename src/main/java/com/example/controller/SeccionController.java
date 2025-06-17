@@ -17,6 +17,7 @@ import com.example.entidad.Seccion;
 import com.example.entidad.SeccionMatriculaInfo;
 import com.example.services.SeccionService;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
 @RestController
@@ -32,12 +33,12 @@ public class SeccionController {
     }
 
     @PostMapping("insertar")
-    public Seccion insertarSeccion(@RequestBody Seccion seccion) {
+    public Seccion insertarSeccion(@Valid @RequestBody Seccion seccion) {
         return seccionService.insertar(seccion);
     }
 
     @PutMapping("actualizar/{id}")
-    public Seccion actualizarSeccion(@PathVariable Integer id, @RequestBody Seccion seccion) {
+    public Seccion actualizarSeccion(@PathVariable Integer id,@Valid @RequestBody Seccion seccion) {
         seccion.setId_seccion(id);
         return seccionService.actualizar(id, seccion);
     }
@@ -48,7 +49,7 @@ public class SeccionController {
         return ResponseEntity.ok("Seccion eliminado correctamente con Id: " + id);
     }
 
-    // Post para la seccion y matricula
+    // Post para la seccion y matricula (TRANSACTION)
     @PostMapping(value = "/completo", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity <String> insertarSeccionMatricula(@RequestBody SeccionMatriculaInfo info) {
 
