@@ -8,8 +8,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.example.entidad.Usuario;
 import com.example.repositories.UsuarioRepository;
-
-import util.Rol;
+import com.example.util.Rol;
 
 @SpringBootApplication
 public class MatriculaApplication {

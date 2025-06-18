@@ -1,4 +1,4 @@
-package config;
+package com.example.config;
 
 import java.util.Date;
 import java.util.HashMap;

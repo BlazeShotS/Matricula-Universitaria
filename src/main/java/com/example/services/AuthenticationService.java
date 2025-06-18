@@ -7,17 +7,17 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.example.config.JwtService;
 import com.example.entidad.CustomUser;
 import com.example.entidad.Usuario;
 import com.example.repositories.UsuarioRepository;
+import com.example.util.AuthenticationRequest;
+import com.example.util.AuthenticationResponse;
+import com.example.util.RefreshTokenRequest;
+import com.example.util.RegisterRequest;
+import com.example.util.Rol;
 
-import config.JwtService;
 import lombok.RequiredArgsConstructor;
-import util.AuthenticationRequest;
-import util.AuthenticationResponse;
-import util.RefreshTokenRequest;
-import util.RegisterRequest;
-import util.Rol;
 
 @Service
 @RequiredArgsConstructor

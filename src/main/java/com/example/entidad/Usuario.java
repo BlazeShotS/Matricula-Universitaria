@@ -1,5 +1,7 @@
 package com.example.entidad;
 
+import com.example.util.Rol;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -16,7 +18,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import util.Rol;
 
 @Builder
 @Entity
