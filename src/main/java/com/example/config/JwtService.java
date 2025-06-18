@@ -1,4 +1,4 @@
-package config;
+package com.example.config;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import lombok.RequiredArgsConstructor;
+
 
 @Service
 @RequiredArgsConstructor
@@ -48,7 +49,7 @@ public class JwtService {
         return Jwts
             .builder() //Objeto con el que se armara el token
             .claims(extraClaims) //Inserta datos extras personalizado como roles
-            .subject(userDetails.getUsername()) //el sujeto del token tipicamente el username
+            .subject(userDetails.getUsername()) //el sujeto del token tipicamente el username de CustomUser, linea 28
             .issuedAt(new Date(System.currentTimeMillis())) //Cuando se emite el token
             .expiration(new Date(System.currentTimeMillis() + expirationMillis)) // Cuando expira
             .signWith(secretKey) //la firma digital
