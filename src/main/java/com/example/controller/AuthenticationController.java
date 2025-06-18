@@ -9,6 +9,7 @@ import com.example.util.AuthenticationResponse;
 import com.example.util.RefreshTokenRequest;
 import com.example.util.RegisterRequest;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 import java.util.Map;
@@ -35,7 +36,7 @@ public class AuthenticationController {
     }    
 
     @PostMapping("/autenticarse")
-    public ResponseEntity <AuthenticationResponse> authenticar (@RequestBody AuthenticationRequest request) {
+    public ResponseEntity <AuthenticationResponse> authenticar (@RequestBody AuthenticationRequest request ) {
         return ResponseEntity.ok(authenticationService.authenticate(request));
     }
 

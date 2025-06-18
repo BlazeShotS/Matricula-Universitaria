@@ -61,6 +61,7 @@ public class AuthenticationService {
                 new UsernamePasswordAuthenticationToken(request.email(), request.password())); //request.email(), request.password() , correo y contraseña que el usuario ingreso lo envia al AuthenticationManager de SecurityConfig (VALIDA QUE EL USUARIO EXISTA EN LA DATABASEE)
         var user = usuarioRepository.findByCorreo(request.email()).orElseThrow(); //Obtiene el correo que el usuario ingreso al iniciar sesion
         
+        //ENVOLVEMOS el usuario en un CustomUser (Que implementa un UserDetails)
         CustomUser customUser = new CustomUser(user);
 
         var jwtToken = jwtService.generateToken(new HashMap<>(),customUser);

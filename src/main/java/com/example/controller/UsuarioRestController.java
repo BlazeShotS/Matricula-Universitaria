@@ -71,9 +71,4 @@ public class UsuarioRestController {
         return "Página Privada solo con accesos";
     }
     
-    
-
-
-
-
 }
