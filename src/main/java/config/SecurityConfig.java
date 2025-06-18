@@ -16,13 +16,13 @@ public class SecurityConfig {
 
 
     
-
+    //Internamente, el AuthenticationManager usa el UserDetailsService que Spring haya detectado como @Service en tu aplicación.
     @Bean
     public AuthenticationManager authenticationManager (AuthenticationConfiguration configuration) throws Exception{
         return configuration.getAuthenticationManager();
     }
 
-    
+
     // encripta la contraseña ingresada para ser comparada con la de la database
     @Bean
     BCryptPasswordEncoder passwordEncoder() {

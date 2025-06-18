@@ -15,6 +15,7 @@ import config.JwtService;
 import lombok.RequiredArgsConstructor;
 import util.AuthenticationRequest;
 import util.AuthenticationResponse;
+import util.RefreshTokenRequest;
 import util.RegisterRequest;
 import util.Rol;
 
@@ -30,7 +31,7 @@ public class AuthenticationService {
 
     // EL AuthenticationResponse VIENE DE util, AuthenticationResponse
 
-    // El RegisterRequest viene del paquete util , RegisterRequest (Registrar un usuario y se genera un token (acces y refresh))
+    // El RegisterRequest viene del paquete util , RegisterRequest (Registrar un usuario y se genera un token (acces y refresh)) 
     public AuthenticationResponse register (RegisterRequest request){
         var user = Usuario.builder()
             .nombre(request.firstname()) //Los nombres como .nombre() , .apellido() etc , tienen que ser los mismos de mi atributo de la entidad
@@ -56,8 +57,8 @@ public class AuthenticationService {
 
     // El AuthenticationRequest viene del paquete util (Al momento de iniciar sesion valida credenciales y se genera un token)
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(request.email(), request.password())); //request.email(), request.password() , correo y contraseña que el usuario ingreso lo envia al authenticationManager
+        authenticationManager.authenticate( 
+                new UsernamePasswordAuthenticationToken(request.email(), request.password())); //request.email(), request.password() , correo y contraseña que el usuario ingreso lo envia al AuthenticationManager de SecurityConfig (VALIDA QUE EL USUARIO EXISTA EN LA DATABASEE)
         var user = usuarioRepository.findByCorreo(request.email()).orElseThrow(); //Obtiene el correo que el usuario ingreso al iniciar sesion
         
         CustomUser customUser = new CustomUser(user);
@@ -69,9 +70,24 @@ public class AuthenticationService {
     }
 
 
+    
+    // proceso de renovacion del access token usando el refresh token 
+    //(es decir cuando se venza el access token , mediante el refresh token se genera un access token y cuando se venca el access token si el refresh token sigo vigente sigue generando un access token hasta que venca el refresh token)
+    // El RefreshTokenRequest viene del paquete util ,
+    public AuthenticationResponse refreshToken(RefreshTokenRequest request) {
+        String userEmail = jwtService.extractUsername(request.refreshToken());
+        if (userEmail != null) {
+            var user = usuarioRepository.findByCorreo(userEmail).orElseThrow();
 
+            CustomUser customUser = new CustomUser(user);
 
-
+            if (jwtService.isTookenValid(request.refreshToken(), customUser)) {
+                var accessToken = jwtService.generateToken(new HashMap<>(),customUser);
+                return new AuthenticationResponse(accessToken, request.refreshToken());
+            }
+        }
+        throw new RuntimeException("Token de refrezco invalido");
+    }
 
 
 }

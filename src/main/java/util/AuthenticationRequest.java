@@ -1,6 +1,7 @@
 package util;
 
-public record AuthenticationRequest(
+
+public record AuthenticationRequest( //Un record sirve para almacenar datos de entrada o de salida
 
     String email,
     String password
