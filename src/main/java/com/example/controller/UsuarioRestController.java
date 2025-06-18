@@ -60,7 +60,7 @@ public class UsuarioRestController {
     }
 
 
-    //----Página de acceso para usuarios publicos y privados
+    //-------Página de acceso para usuarios publicos y privados--------
     @GetMapping("/publico")
     public String paginaPublica() {
         return "Pagina Pública";

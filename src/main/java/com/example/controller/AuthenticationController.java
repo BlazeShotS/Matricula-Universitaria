@@ -32,15 +32,12 @@ public class AuthenticationController {
     @PostMapping("/registro")
     public ResponseEntity <AuthenticationResponse> registrar(@RequestBody RegisterRequest request) {
         return ResponseEntity.ok(authenticationService.register(request));
-    }
-    
+    }    
 
     @PostMapping("/autenticarse")
     public ResponseEntity <AuthenticationResponse> authenticar (@RequestBody AuthenticationRequest request) {
         return ResponseEntity.ok(authenticationService.authenticate(request));
     }
-
-
 
     //Con este solicitamos con nuestro token refresh un nuevo token de access
     @PostMapping("/refresh-token")
@@ -52,10 +49,6 @@ public class AuthenticationController {
         }
         
     }
-
-
-
-
 
 
 }

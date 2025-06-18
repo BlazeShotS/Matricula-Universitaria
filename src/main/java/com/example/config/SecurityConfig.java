@@ -19,7 +19,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    
+    private final JwtAuthenticationFilter jwtAuthFilter;
     
     //Internamente, el AuthenticationManager usa el UserDetailsService que Spring haya detectado como @Service en tu aplicación.
     @Bean
@@ -40,12 +40,13 @@ public class SecurityConfig {
             .csrf(AbstractHttpConfigurer::disable)
             .authorizeHttpRequests(auth -> auth
             .requestMatchers("/api/v1/auth/**").permitAll() //Ingresar sin token
-            .requestMatchers("api/usuario/publico", "/api/usuario/**").hasAuthority("RECEP")
             .requestMatchers("/api/usuario/privado").hasAuthority("ADMIN")
+            .requestMatchers("/api/usuario/publico").hasAuthority("RECEP")
+            .requestMatchers("/api/usuario/**").hasAuthority("RECEP")
             //cualquier otra ruta no mencionada necesita que el usuario sea autenticado pero sin importar si es admin o client
             .anyRequest().authenticated())
         .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-        //.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+        .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
 
 

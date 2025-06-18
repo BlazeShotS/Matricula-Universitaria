@@ -49,7 +49,7 @@ public class JwtService {
         return Jwts
             .builder() //Objeto con el que se armara el token
             .claims(extraClaims) //Inserta datos extras personalizado como roles
-            .subject(userDetails.getUsername()) //el sujeto del token tipicamente el username
+            .subject(userDetails.getUsername()) //el sujeto del token tipicamente el username de CustomUser, linea 28
             .issuedAt(new Date(System.currentTimeMillis())) //Cuando se emite el token
             .expiration(new Date(System.currentTimeMillis() + expirationMillis)) // Cuando expira
             .signWith(secretKey) //la firma digital
