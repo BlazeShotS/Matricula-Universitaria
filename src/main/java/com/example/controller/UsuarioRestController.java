@@ -19,8 +19,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PutMapping;
-
-
+import org.springframework.web.bind.annotation.RequestParam;
 
 
 
@@ -59,6 +58,21 @@ public class UsuarioRestController {
         usuarioService.eliminar(id_usuario);
         return ResponseEntity.ok("Usuario eliminado correctamente Id :" + id_usuario);
     }
+
+
+    //----Página de acceso para usuarios publicos y privados
+    @GetMapping("/publico")
+    public String paginaPublica() {
+        return "Pagina Pública";
+    }
+
+    @GetMapping("/privado")
+    public String paginaPrivada() {
+        return "Página Privada solo con accesos";
+    }
+    
+    
+
 
 
 
