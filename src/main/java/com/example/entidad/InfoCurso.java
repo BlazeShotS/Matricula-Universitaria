@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,10 +19,12 @@ public class InfoCurso {
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Integer id_infoCurso;
 
+    @NotBlank(message = "Ingrese un apellido")
     private String hora_semanal;
 
-    private String credito;
+    private Integer credito;
 
+    @NotBlank(message = "Ingrese un tipo (Obligatorio/Electivo)")
     private String tipo;
 
 }
