@@ -64,8 +64,4 @@ public class EstudianteUniversidadController {
         return ResponseEntity.ok("Estudiante que averiguo info de la universidad eliminado con exito de id: "+dni);
     }
 
-    
-
- 
-
 }
