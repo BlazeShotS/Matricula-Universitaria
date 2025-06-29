@@ -26,14 +26,19 @@ public class SecurityConfig {
 
     private final JwtAuthenticationFilter jwtAuthFilter;
 
-    // Internamente, el AuthenticationManager usa el UserDetailsService que Spring
-    // haya detectado como @Service en tu aplicación.
+    // Internamente, el AuthenticationManager usa el UserDetailsService que Spring haya detectado como @Service en tu aplicación.
+    /*
+     Spring Security internamente usa el UserDetailsService (en tu caso CustomUserService) para cargar el usuario desde la base de datos, usando el username (tu email).
+    */
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
         return configuration.getAuthenticationManager();
     }
 
     // encripta la contraseña ingresada para ser comparada con la de la database
+    /*
+     Luego, Spring usa el PasswordEncoder (el BCryptPasswordEncoder) para comparar la contraseña ingresada (request.password()) con la contraseña encriptada que viene del usuario de la base de datos que fue envolvida en CustomUser.
+     */
     @Bean
     BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

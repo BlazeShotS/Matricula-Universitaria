@@ -22,6 +22,8 @@ public class JwtService {
     private final JwtConfig jwtConfig;
     private final SecretKey secretKey;
 
+    // el token NO se genera directamente desde la entidad Usuario, sino desde el objeto CustomUser, que envuelve al Usuario. ya que spring security esta diseñado solo para trabajar con la interfaz UserDetails
+
     //Generar un token de acceso
     public String generateToken (UserDetails userDetails){
         return generateToken(new HashMap<>(),userDetails);

@@ -57,13 +57,14 @@ public class AuthenticationService {
 
     // El AuthenticationRequest viene del paquete util (Al momento de iniciar sesion valida credenciales y se genera un token)
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
-        authenticationManager.authenticate( 
-                new UsernamePasswordAuthenticationToken(request.email(), request.password())); //request.email(), request.password() , correo y contraseña que el usuario ingreso lo envia al AuthenticationManager de SecurityConfig (VALIDA QUE EL USUARIO EXISTA EN LA DATABASEE)
+        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.email(), request.password())); //request.email(), request.password() , correo y contraseña que el usuario ingreso lo envia al AuthenticationManager de SecurityConfig (VALIDA QUE EL USUARIO EXISTA EN LA DATABASEE) y si valida y existe recien pasa a la siguiente linea
+        //↑↑ VALIDA QUE EXISTA EN LA DATABASE
         var user = usuarioRepository.findByCorreo(request.email()).orElseThrow(); //Obtiene el correo que el usuario ingreso al iniciar sesion
         
         //ENVOLVEMOS el usuario en un CustomUser (Que implementa un UserDetails)
         CustomUser customUser = new CustomUser(user);
 
+        //Ponemos el customUser en los jwt , porque en nuestro jwtService esta codificado para que los token se guarden en el custonUser que envuelve la entidad Usuario, ademas para el spring security se maneja  solo con customUser
         var jwtToken = jwtService.generateToken(new HashMap<>(),customUser);
         var refreshToken = jwtService.generateRefreshToken(customUser);
         return new AuthenticationResponse(jwtToken, refreshToken);
