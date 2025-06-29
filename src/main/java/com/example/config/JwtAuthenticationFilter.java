@@ -39,13 +39,15 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
 
         final String jwt = authHeader.substring(7);
-        final String userEmail = jwtService.extractUsername(jwt);
+        final String userEmail = jwtService.extractUsername(jwt); 
+
+        //ESTe PROCESO SE HACE CUANDO UNA VEZ INICIADO SESION Y ENTRA A LA PAGINA PRIVADA Y QUIERE HACER UN GET,POST,PUT,DELETE ETC VERIFICA EL TOKEN Y SI EXISTE DEJA QUE HAGA EL PROCESO QUE QUIERA
 
         // Extrae el JWT y el correo(username)
         if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
+            UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail); //Aca llamamos directamente a ese loadUserByUsername ,porque no esta en autenticacion o registro sino en validacion que el usuario exista y tenga jwt
 
-            System.out.println(userDetails.getAuthorities());
+            System.out.println(userDetails.getAuthorities()); //Capturo el rol y muestro en la consola
 
             if (jwtService.isTookenValid(jwt, userDetails)) { // Aca esta validando el token si es valido, si expiro , el usuario porque ese isTookenValid viene de jwtService
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(userDetails,
