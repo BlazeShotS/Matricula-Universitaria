@@ -29,7 +29,7 @@ public class SubirImgController {
 
     private final String UPLOAD_DIR = "uploads/img/";
 
-    @PostMapping("/upload-img")
+    @PostMapping("/upload-img")                           //Esto espera
     public ResponseEntity<String> uploadImage(@RequestParam("image") MultipartFile file) {
         try {
             // Generar nombre único
