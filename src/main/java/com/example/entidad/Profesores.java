@@ -49,5 +49,6 @@ public class Profesores {
     private String nivel_estudio;
 
 
+    private String img;
 
 }

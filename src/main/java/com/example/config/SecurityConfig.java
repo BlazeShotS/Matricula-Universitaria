@@ -51,6 +51,8 @@ public class SecurityConfig {
             .cors(Customizer.withDefaults()) // HABILITAR y CREAMOS EN LINK DE CONFIGURACION , QUE SERIA LO DE LA LINEA 57 PARA ABAJO: UrlBasedCorsConfigurationSource
             .authorizeHttpRequests(auth -> auth
                     .requestMatchers("/api/v1/auth/**").permitAll() // Ingresar sin token
+                    .requestMatchers("/api/imagen/**").permitAll()
+                    .requestMatchers("/*.png", "/*.jpg", "/*.jpeg", "/*.gif").permitAll() // importante
                     .requestMatchers("/api/usuario/privado").hasAuthority("ADMIN")
                     .requestMatchers("/api/usuario/publico").hasAuthority("RECEP")
                     .requestMatchers("/api/usuario/**").hasAuthority("RECEP")
