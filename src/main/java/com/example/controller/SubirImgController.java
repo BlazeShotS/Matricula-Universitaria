@@ -27,7 +27,7 @@ import lombok.AllArgsConstructor;
 @RequestMapping("/api/imagen")
 public class SubirImgController {
 
-    private final String UPLOAD_DIR = "uploads/";
+    private final String UPLOAD_DIR = "uploads/img/";
 
     @PostMapping("/upload-img")
     public ResponseEntity<String> uploadImage(@RequestParam("image") MultipartFile file) {
