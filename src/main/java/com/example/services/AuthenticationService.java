@@ -1,9 +1,14 @@
 package com.example.services;
 
 import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+import javax.swing.Spring;
 
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -46,8 +51,15 @@ public class AuthenticationService {
         //ENVOLVEMOS el usuario en un CustomUser (Que implementa un UserDetails)
         CustomUser customUser = new CustomUser(user);
 
+        /*
+        Map<String, Object> extraClaims = new HashMap<>();
+        extraClaims.put("authority", customUser.getAuthorities().stream()
+        .map(GrantedAuthority::getAuthority)
+        .collect(Collectors.toList()));
+        */
+
         //Usamos el metodo correcto con los argumentos esperados
-        var jwtToken = jwtService.generateToken(new HashMap<>(),customUser);
+        var jwtToken = jwtService.generateToken(customUser);
         var refreshToken = jwtService.generateRefreshToken(customUser);
 
         return new AuthenticationResponse(jwtToken, refreshToken);
@@ -57,7 +69,7 @@ public class AuthenticationService {
 
     // El AuthenticationRequest viene del paquete util (Al momento de iniciar sesion valida credenciales y se genera un token)
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.email(), request.password())); //request.email(), request.password() , correo y contraseña que el usuario ingreso lo envia al AuthenticationManager de SecurityConfig (VALIDA QUE EL USUARIO EXISTA EN LA DATABASEE) y si valida y existe recien pasa a la siguiente linea
+        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.email(), request.password())); //request.email(), request.password() , correo y contraseña que el usuario ingreso lo envia al AuthenticationManager de SecurityConfig (VALIDA QUE EL USUARIO EXISTA EN LA DATABASEE) y si valida y existe recien pasa a la siguiente linea (ES DECIR ESTA LINEA HACE EL PROCESO DE LOGIN)
         //↑↑ VALIDA QUE EXISTA EN LA DATABASE
         var user = usuarioRepository.findByCorreo(request.email()).orElseThrow(); //Obtiene el correo que el usuario ingreso al iniciar sesion
         
@@ -65,7 +77,16 @@ public class AuthenticationService {
         CustomUser customUser = new CustomUser(user);
 
         //Ponemos el customUser en los jwt , porque en nuestro jwtService esta codificado para que los token se guarden en el custonUser que envuelve la entidad Usuario, ademas para el spring security se maneja  solo con customUser
-        var jwtToken = jwtService.generateToken(new HashMap<>(),customUser);
+        
+        //Esto hace que se Agrega el claim "authority": ["ADMIN"] o "RECEP" dentro del JWT. Este claim personalizado es lo que Spring Security valida cuando haces:
+        /*
+        Map<String, Object> extraClaims = new HashMap<>();
+        extraClaims.put("authority", customUser.getAuthorities().stream()
+        .map(GrantedAuthority::getAuthority)
+        .collect(Collectors.toList()));
+        */
+
+        var jwtToken = jwtService.generateToken(customUser);
         var refreshToken = jwtService.generateRefreshToken(customUser);
         return new AuthenticationResponse(jwtToken, refreshToken);
 
