@@ -32,7 +32,7 @@ public class SubirImgController {
     @PostMapping("/upload-img")                           //Esto espera
     public ResponseEntity<String> uploadImage(@RequestParam("image") MultipartFile file) {
         try {
-            // Generar nombre único
+            // Generar nombre único (Es decir lo que llega del frontend si llego carlog.jpg aca se genera un nombre unico) y se guardara algo asi uploads/img/f3c9a77a-e2c2-4fd5-826b-d7c2a4573f3f_mifoto.jpg
             String fileName = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
             Path path = Paths.get(UPLOAD_DIR + fileName);
 
@@ -40,9 +40,10 @@ public class SubirImgController {
             Files.createDirectories(path.getParent());
 
             // Guardar archivo
+            //Convierte la imagen en bytes y la escribe en la ruta que definiste.
             Files.write(path, file.getBytes());
 
-            // Retornar nombre para guardar en la entidad
+            // Si todo va bien , devuelve el nombre del archivo para que se pueda guardar en la entidad a una base de datos
             return ResponseEntity.ok(fileName);
 
         } catch (IOException e) {

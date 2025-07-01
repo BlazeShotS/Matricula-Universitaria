@@ -45,7 +45,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         // Extrae el JWT y el correo(username)
         if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail); //Aca llamamos directamente a ese loadUserByUsername ,porque no esta en autenticacion o registro sino en validacion que el usuario exista y tenga jwt
+            UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail); //Aca llamamos directamente a ese loadUserByUsername y mas abajo captura el rol por eso no es necesario un extra claims personalizado como ROL , por otro lado esta parte no esta en autenticacion o registro sino en validacion que el usuario exista y tenga jwt
 
             System.out.println(userDetails.getAuthorities()); //Capturo el rol y muestro en la consola
 

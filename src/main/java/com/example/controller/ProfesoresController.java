@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,7 +33,7 @@ public class ProfesoresController {
     }
 
     @PostMapping("insertar")
-    public Profesores insertarProfesor(@Valid @RequestBody Profesores profesores) {                
+    public Profesores insertarProfesor(@Valid @RequestBody Profesores profesores) {     
         return profesoresService.insertar(profesores);
     }
 

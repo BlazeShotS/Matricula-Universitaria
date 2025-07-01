@@ -48,14 +48,16 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             .csrf(AbstractHttpConfigurer::disable)
-            .cors(Customizer.withDefaults()) // HABILITAR y CREAMOS EN LINK DE CONFIGURACION , QUE SERIA LO DE LA LINEA 57 PARA ABAJO: UrlBasedCorsConfigurationSource
+            .cors(Customizer.withDefaults()) // HABILITAR y CREAMOS EN LINK DE CONFIGURACION , QUE SERIA LO DE LA LINEA 70 PARA ABAJO: UrlBasedCorsConfigurationSource
             .authorizeHttpRequests(auth -> auth
                     .requestMatchers("/api/v1/auth/**").permitAll() // Ingresar sin token
-                    .requestMatchers("/api/imagen/**").permitAll()
+                    .requestMatchers("/api/imagen/**").permitAll() //Para que la img se guarde en uploads/img
                     .requestMatchers("/img/**").permitAll()//Del WebConfig que mapee que sea desde img      
                     .requestMatchers("/api/usuario/privado").hasAuthority("ADMIN")
                     .requestMatchers("/api/usuario/publico").hasAuthority("RECEP")
                     .requestMatchers("/api/usuario/**").hasAuthority("RECEP")
+                    .requestMatchers("/api/profesores/**").hasAuthority("ADMIN") // o "ADMIN"
+
                     
                     .requestMatchers("/api/EstudianteUniversidad/**").permitAll()//ESto por el momento estara como permitAll , para probar
                     .anyRequest().authenticated()) // cualquier otra ruta no mencionada necesita que el usuario sea autenticado pero sin importar si es admin o client

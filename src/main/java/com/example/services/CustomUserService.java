@@ -21,7 +21,7 @@ public class CustomUserService implements UserDetailsService{
         Usuario usuario;
         try {
             usuario = service.findByCorreo(username);//Busca por email al usuario en la base de datos
-            return new CustomUser(usuario); //Envolvemos en CustomUser porque Spring security usa ese CustomUser internamente para validad el PasswordEncoder y el getAuthorities
+            return new CustomUser(usuario); //Envolvemos en CustomUser porque Spring security usa ese CustomUser internamente para validar el PasswordEncoder y el getAuthorities
         } catch (Exception e) {
             throw new UsernameNotFoundException("Usuario no encontrado");
         }
