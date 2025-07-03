@@ -24,6 +24,10 @@ public class ProfesoresService {
         return profesoresRepository.save(profesores);
     }
 
+    public Profesores obtenerPorId (Integer idProfesor){
+        return profesoresRepository.findById(idProfesor).orElse(null);
+    }
+
     public Profesores actualizar (Integer id , Profesores profesores){
         if (!profesoresRepository.existsById(profesores.getId_profesor())) {
             throw new RuntimeException("No se puede actualizar , el profesor no existe");

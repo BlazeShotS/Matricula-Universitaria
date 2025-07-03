@@ -37,6 +37,11 @@ public class ProfesoresController {
         return profesoresService.insertar(profesores);
     }
 
+    @GetMapping("lista/{idProfesor}")
+    public Profesores selectProfesorId(@PathVariable Integer idProfesor) {
+        return profesoresService.obtenerPorId(idProfesor);
+    }
+
     @PutMapping("actualizar/{id}")
     public Profesores actualizarProfesor(@PathVariable Integer id,@Valid @RequestBody Profesores profesores) {
         profesores.setId_profesor(id);
