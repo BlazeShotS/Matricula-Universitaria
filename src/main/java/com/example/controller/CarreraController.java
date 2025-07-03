@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.entidad.Carrera;
+import com.example.entidad.Profesores;
 import com.example.services.CarreraService;
 
 import jakarta.validation.Valid;
@@ -37,6 +38,11 @@ public class CarreraController {
     @PostMapping("insertar")
     public Carrera insertarCarrera(@Valid @RequestBody Carrera carrera) {                
         return carreraService.insertar(carrera);
+    }
+
+    @GetMapping("lista/{idCarrera}")
+    public Carrera selectCarreraId(@PathVariable Integer idCarrera) {
+        return carreraService.obtenerPorId(idCarrera);
     }
 
     @PutMapping("actualizar/{id}")
