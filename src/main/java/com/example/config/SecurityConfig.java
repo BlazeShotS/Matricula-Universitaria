@@ -56,7 +56,9 @@ public class SecurityConfig {
                     .requestMatchers("/api/usuario/privado").hasAuthority("ADMIN")
                     .requestMatchers("/api/usuario/publico").hasAuthority("RECEP")
                     .requestMatchers("/api/usuario/**").hasAuthority("RECEP")
+
                     .requestMatchers("/api/profesores/**").hasAuthority("ADMIN") // o "ADMIN"
+                    .requestMatchers("/api/carrera/**").hasAuthority("ADMIN")
 
                     
                     .requestMatchers("/api/EstudianteUniversidad/**").permitAll()//ESto por el momento estara como permitAll , para probar
