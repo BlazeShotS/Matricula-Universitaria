@@ -23,12 +23,12 @@ public class ValidationExceptionHandler extends ResponseEntityExceptionHandler {
                 Map <String , String> errors = new HashMap();   
             ex.getBindingResult().getAllErrors().forEach(
                 (error) ->{
-                    String campo = ((FieldError) error).getField();//Captura errores
-                    String mensaje = error.getDefaultMessage();
+                    String campo = ((FieldError) error).getField();//Captura errores por ejemplo , campo: nombre_carrera
+                    String mensaje = error.getDefaultMessage(); // mensaje que se puse en la entidad por ejemplo : "No puede contener numeros"
                     errors.put(campo, mensaje);
                 });
-            return new ResponseEntity<>(errors,HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(errors,HttpStatus.BAD_REQUEST); //devuelvo como cuerpo de la respuesta
         }
-    
+        
 
 }

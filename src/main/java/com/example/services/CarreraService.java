@@ -6,7 +6,6 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.example.entidad.Carrera;
-import com.example.entidad.Profesores;
 import com.example.repositories.CarreraRepository;
 
 import lombok.AllArgsConstructor;
