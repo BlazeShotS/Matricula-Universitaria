@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.entidad.Carrera;
-import com.example.entidad.Profesores;
 import com.example.services.CarreraService;
 
 import jakarta.validation.Valid;

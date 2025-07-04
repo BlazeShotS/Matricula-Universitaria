@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-@ControllerAdvice //En aca gracias al @Valid cuando los datos no son validos esta parte se activa
+@ControllerAdvice //En aca gracias al @Valid que este en el controlador ,cuando los datos no son validos esta parte se activa
 public class ValidationExceptionHandler extends ResponseEntityExceptionHandler {
 
     
@@ -23,12 +23,12 @@ public class ValidationExceptionHandler extends ResponseEntityExceptionHandler {
                 Map <String , String> errors = new HashMap();   
             ex.getBindingResult().getAllErrors().forEach(
                 (error) ->{
-                    String campo = ((FieldError) error).getField();//Captura errores
-                    String mensaje = error.getDefaultMessage();
+                    String campo = ((FieldError) error).getField();//Captura errores por ejemplo , campo: nombre_carrera
+                    String mensaje = error.getDefaultMessage(); // mensaje que se puse en la entidad por ejemplo : "No puede contener numeros"
                     errors.put(campo, mensaje);
                 });
-            return new ResponseEntity<>(errors,HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(errors,HttpStatus.BAD_REQUEST); //devuelvo como cuerpo de la respuesta
         }
-    
+        
 
 }
