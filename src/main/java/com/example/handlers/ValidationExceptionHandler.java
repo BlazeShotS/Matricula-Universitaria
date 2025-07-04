@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-@ControllerAdvice //En aca gracias al @Valid cuando los datos no son validos esta parte se activa
+@ControllerAdvice //En aca gracias al @Valid que este en el controlador ,cuando los datos no son validos esta parte se activa
 public class ValidationExceptionHandler extends ResponseEntityExceptionHandler {
 
     
