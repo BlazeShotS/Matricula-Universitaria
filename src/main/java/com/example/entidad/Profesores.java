@@ -46,7 +46,7 @@ public class Profesores {
 
     @NotBlank(message = "Ingrese el nivel de estudio del docente")
     @Pattern(regexp = "^[A-Za-zÁÉÍÓÚáéíóúÑñ ]+$", message = "El nombre no puede contener números ni símbolos")
-    private String nivel_estudio;
+    private String nivelEstudio;
 
 
     private String img;

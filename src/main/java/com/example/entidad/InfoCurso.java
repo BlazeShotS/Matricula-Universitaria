@@ -27,9 +27,9 @@ public class InfoCurso {
 
     @NotBlank(message = "Ingrese la hora semanal")
     @Pattern(regexp = "^\\d{1,2}(\\.\\d{1,2})?$", message = "Ingrese una hora válida (solo números)")
-    private String hora_semanal;
+    private String horaSemanal;
 
-    @NotNull(message = "Ingrese el crédito")
+    @NotNull(message = "Ingrese los creditos que tiene el curso")
     @Min(value = 1, message = "El crédito debe ser al menos 1")
     @Max(value = 20, message = "El crédito no debe superar 20")
     private Integer credito;
