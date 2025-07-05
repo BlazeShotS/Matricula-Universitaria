@@ -4,7 +4,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,9 +23,13 @@ public class InfoCurso {
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Integer id_infoCurso;
 
-    @NotBlank(message = "Ingrese un apellido")
+    @NotBlank(message = "Ingrese la hora semanal")
+    @Pattern(regexp = "^\\d{1,2}(\\.\\d{1,2})?$", message = "Ingrese una hora válida (solo números)")
     private String hora_semanal;
 
+    @NotNull(message = "Ingrese el crédito")
+    @Min(value = 1, message = "El crédito debe ser al menos 1")
+    @Max(value = 20, message = "El crédito no debe superar 20")
     private Integer credito;
 
     @NotBlank(message = "Ingrese un tipo (Obligatorio/Electivo)")
