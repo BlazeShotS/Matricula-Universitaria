@@ -52,6 +52,7 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
                     .requestMatchers("/api/v1/auth/**").permitAll() // Ingresar sin token
                     .requestMatchers("/api/imagen/**").permitAll() //Para que la img se guarde en uploads/img
+                    .requestMatchers("/api/curso/**").permitAll()
                     .requestMatchers("/img/**").permitAll()//Del WebConfig que mapee que sea desde img      
                     .requestMatchers("/api/usuario/privado").hasAuthority("ADMIN")
                     .requestMatchers("/api/usuario/publico").hasAuthority("RECEP")
