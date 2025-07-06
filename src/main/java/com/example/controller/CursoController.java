@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.entidad.Curso;
+import com.example.entidad.Curso_InfoCurso;
 import com.example.services.CursoServices;
 
 import jakarta.validation.Valid;
@@ -49,6 +50,18 @@ public class CursoController {
         cursoServices.eliminar(id);
         return ResponseEntity.ok("Carrera eliminado correctamente con Id: "+id);
     }
+
+    //Post para guardar tanto el curso con info curso
+    @PostMapping(value = "/completo",consumes = MediaType.APPLICATION_JSON_VALUE)
+    public String insertCursoInfoCurso(@RequestBody Curso_InfoCurso curso_InfoCurso) {
+        try {
+            cursoServices.crearCursoInfoCurso(curso_InfoCurso);
+            return "Curso con info del curso creado exitosamente";
+        } catch (Exception e) {
+            return e.getMessage();
+        }
+    }
+    
 
 
     
