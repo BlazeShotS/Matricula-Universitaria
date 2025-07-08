@@ -15,44 +15,52 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.entidad.Curso;
 import com.example.entidad.Curso_InfoCurso;
+import com.example.entidad.Curso_InfoCursoResponse;
 import com.example.services.CursoServices;
 
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
-@RequestMapping(value = "api/curso" , produces = MediaType.APPLICATION_JSON_VALUE )
+@RequestMapping(value = "api/curso", produces = MediaType.APPLICATION_JSON_VALUE)
 @AllArgsConstructor
 public class CursoController {
 
     private final CursoServices cursoServices;
 
-
-    
-    @GetMapping("listar")
-    public List <Curso> listarCursos() {
+    @GetMapping()
+    public List<Curso> listarCursos() {
         return cursoServices.listar();
     }
 
-    @PostMapping("insertar")
-    public Curso insertarCurso(@Valid @RequestBody Curso curso) {             
+    @PostMapping()
+    public Curso insertarCurso(@Valid @RequestBody Curso curso) {
         return cursoServices.insertar(curso);
     }
 
-    @PutMapping("actualizar/{id}")
-    public Curso actualizarCurso(@PathVariable Integer id,@Valid @RequestBody Curso curso) {
+    @PutMapping()
+    public Curso actualizarCurso(@PathVariable Integer id, @Valid @RequestBody Curso curso) {
         curso.setId_curso(id);
         return cursoServices.actualizar(id, curso);
     }
 
-    @DeleteMapping("eliminar/{id}")
-    public ResponseEntity <String> eliminarCurso(@PathVariable Integer id){
+    @DeleteMapping()
+    public ResponseEntity<String> eliminarCurso(@PathVariable Integer id) {
         cursoServices.eliminar(id);
-        return ResponseEntity.ok("Carrera eliminado correctamente con Id: "+id);
+        return ResponseEntity.ok("Carrera eliminado correctamente con Id: " + id);
     }
 
-    //Post para guardar tanto el curso con info curso
-    @PostMapping(value = "/completo",consumes = MediaType.APPLICATION_JSON_VALUE)
+    /*-------------------PARA TRANSACTION-----------------------------*/
+
+    @GetMapping("/listar")
+    public ResponseEntity<List<Curso_InfoCursoResponse>> listarCursoInfoCurso() {
+        List<Curso_InfoCursoResponse> lista = cursoServices.listarCursosConInfo();
+        return ResponseEntity.ok(lista);
+    }
+
+    // Post para guardar tanto el curso con info curso (TRANSACTION)
+    @PostMapping(value = "/completo", consumes = MediaType.APPLICATION_JSON_VALUE)
     public String insertCursoInfoCurso(@RequestBody Curso_InfoCurso curso_InfoCurso) {
         try {
             cursoServices.crearCursoInfoCurso(curso_InfoCurso);
@@ -61,8 +69,26 @@ public class CursoController {
             return e.getMessage();
         }
     }
-    
 
+    @PutMapping("editar/{id}")
+    public ResponseEntity<?> actualizarCursoInfoCurso(@PathVariable Integer id, @RequestBody Curso_InfoCurso request) {
 
-    
+        try {
+            cursoServices.actualizarCursoConInfo(id, request);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error al actualizar: " + e.getMessage());
+        }
+    }
+
+    @DeleteMapping("eliminar/{id}")
+    public ResponseEntity<?> eliminarCursoInfoCurso(@PathVariable Integer id) {
+        try {
+            cursoServices.eliminarCursoConInfo(id);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error al eliminar: " + e.getMessage());
+        }
+    }
+
 }

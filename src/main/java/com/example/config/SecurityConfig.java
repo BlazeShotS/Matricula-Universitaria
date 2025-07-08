@@ -52,14 +52,15 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
                     .requestMatchers("/api/v1/auth/**").permitAll() // Ingresar sin token
                     .requestMatchers("/api/imagen/**").permitAll() //Para que la img se guarde en uploads/img
-                    .requestMatchers("/api/curso/**").permitAll()
-                    .requestMatchers("/img/**").permitAll()//Del WebConfig que mapee que sea desde img      
+                    .requestMatchers("/img/**").permitAll()//Del WebConfig que mapee que sea desde img 
+                    
                     .requestMatchers("/api/usuario/privado").hasAuthority("ADMIN")
                     .requestMatchers("/api/usuario/publico").hasAuthority("RECEP")
                     .requestMatchers("/api/usuario/**").hasAuthority("RECEP")
 
                     .requestMatchers("/api/profesores/**").hasAuthority("ADMIN") // o "ADMIN"
                     .requestMatchers("/api/carrera/**").hasAuthority("ADMIN")
+                    .requestMatchers("/api/curso/**").hasAuthority("ADMIN")
 
                     
                     .requestMatchers("/api/EstudianteUniversidad/**").permitAll()//ESto por el momento estara como permitAll , para probar
