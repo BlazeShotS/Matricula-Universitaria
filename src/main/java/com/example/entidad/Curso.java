@@ -28,7 +28,6 @@ public class Curso {
     private Integer id_curso;
 
     @NotBlank(message = "Ingrese el nombre del curso")
-    @Pattern(regexp = "^[A-Za-zÁÉÍÓÚáéíóúÑñ ]+$", message = "No puede contener numeros")
     @Size(min = 2, max = 70, message = "Ingrese un apellido entre 2 y 50 caracteres")
     private String nombre;
 

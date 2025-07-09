@@ -53,7 +53,7 @@ public class CursoServices {
 
     /*----------------------------------------------------------------------- */
 
-    /* PARA GET  , USA EL RECORD Curso_InfoCursoResponse*/
+    /* PARA GET , USA EL RECORD Curso_InfoCursoResponse */
     public List<Curso_InfoCursoResponse> listarCursosConInfo() {
 
         List<Curso> cursos = cursoRepository.findAll(); // Esto traera los cursos con su carrera
@@ -79,27 +79,41 @@ public class CursoServices {
         return respuesta;
     }
 
-    /* PARA POST , USA EL RECORD Curso_Infocurso*/
+    /* PARA POST , USA EL RECORD Curso_Infocurso */
     @Transactional
-    public void crearCursoInfoCurso(Curso_InfoCurso info) {
+    public Curso_InfoCursoResponse crearCursoInfoCurso(Curso_InfoCurso info) {
         try {
             // Buscar la carrera por id
-            Carrera carrera = carreraRepository.findById(info.id_carrera()) .orElseThrow(() -> new RuntimeException("Carrera no encontrada"));
+            Carrera carrera = carreraRepository.findById(info.id_carrera()).orElseThrow(() -> new RuntimeException("Carrera no encontrada"));
 
             // Crear un curso
             Curso curso = new Curso();
             curso.setNombre(info.nombre());
             curso.setCiclo(info.ciclo());
             curso.setCarrera(carrera);
-            Curso aux = cursoRepository.save(curso);
+            Curso cursoGuardado = cursoRepository.save(curso);
+
 
             // Crear el info del curso
             InfoCurso infoCurso = new InfoCurso();
             infoCurso.setHoraSemanal(info.horaSemanal());
             infoCurso.setCredito(info.credito());
             infoCurso.setTipo(info.tipo());
-            infoCurso.setCurso(aux);
-            infoCursoRepository.save(infoCurso);
+            infoCurso.setCurso(cursoGuardado);
+            InfoCurso infoCursoGuardado = infoCursoRepository.save(infoCurso);
+
+            //Todo lo insertado lo agregamos en el record Curso_InfoCursoRespone que es lo que servira para mandarle al usuario (get , put)
+            return new Curso_InfoCursoResponse(
+                    cursoGuardado.getId_curso(),
+                    cursoGuardado.getNombre(),
+                    cursoGuardado.getCiclo(),
+                    carrera.getId_carrera(),
+                    carrera.getNombreCarrera(),
+                    infoCursoGuardado.getId_infoCurso(),
+                    infoCursoGuardado.getHoraSemanal(),
+                    infoCursoGuardado.getCredito(),
+                    infoCursoGuardado.getTipo()
+            );
 
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Error al crear el curso y su información", e);
@@ -132,12 +146,12 @@ public class CursoServices {
     public void eliminarCursoConInfo(Integer idCurso) {
         Curso curso = cursoRepository.findById(idCurso).orElseThrow(() -> new RuntimeException("Curso no encontrado"));
 
-        InfoCurso info = infoCursoRepository.findByCurso(curso);
+        InfoCurso info = infoCursoRepository.findByCurso(curso); //Busca ese curso que tiene relacion con su info curso es decir su clave foranea
         if (info != null) {
-            infoCursoRepository.delete(info);
+            infoCursoRepository.delete(info); //Elimina el info del curso
         }
 
-        cursoRepository.delete(curso);
+        cursoRepository.delete(curso); //Elimina el curso
     }
 
 }

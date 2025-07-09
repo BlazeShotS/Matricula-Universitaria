@@ -2,6 +2,7 @@ package com.example.controller;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -20,7 +21,6 @@ import com.example.services.CursoServices;
 
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @RequestMapping(value = "api/curso", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -61,16 +61,17 @@ public class CursoController {
 
     // Post para guardar tanto el curso con info curso (TRANSACTION)
     @PostMapping(value = "/completo", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public String insertCursoInfoCurso(@RequestBody Curso_InfoCurso curso_InfoCurso) {
+    public ResponseEntity <Curso_InfoCursoResponse> insertCursoInfoCurso(@RequestBody Curso_InfoCurso curso_InfoCurso) {
         try {
-            cursoServices.crearCursoInfoCurso(curso_InfoCurso);
-            return "Curso con info del curso creado exitosamente";
+            Curso_InfoCursoResponse respuesta = cursoServices.crearCursoInfoCurso(curso_InfoCurso);
+            return ResponseEntity.ok(respuesta);
         } catch (Exception e) {
-            return e.getMessage();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
 
     @PutMapping("editar/{id}")
+                        //Especificar el tipo esta como ?
     public ResponseEntity<?> actualizarCursoInfoCurso(@PathVariable Integer id, @RequestBody Curso_InfoCurso request) {
 
         try {
