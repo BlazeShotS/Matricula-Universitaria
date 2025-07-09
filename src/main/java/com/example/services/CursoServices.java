@@ -146,12 +146,12 @@ public class CursoServices {
     public void eliminarCursoConInfo(Integer idCurso) {
         Curso curso = cursoRepository.findById(idCurso).orElseThrow(() -> new RuntimeException("Curso no encontrado"));
 
-        InfoCurso info = infoCursoRepository.findByCurso(curso);
+        InfoCurso info = infoCursoRepository.findByCurso(curso); //Busca ese curso que tiene relacion con su info curso es decir su clave foranea
         if (info != null) {
-            infoCursoRepository.delete(info);
+            infoCursoRepository.delete(info); //Elimina el info del curso
         }
 
-        cursoRepository.delete(curso);
+        cursoRepository.delete(curso); //Elimina el curso
     }
 
 }
