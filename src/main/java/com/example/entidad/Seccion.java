@@ -20,13 +20,11 @@ public class Seccion {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id_seccion;
-
+    private Integer idSeccion;
 
     @ManyToOne
     @JoinColumn(name = "id_curso")
     private Curso curso;
-
 
     private String horario; //Rango 8:30 - 11:30
 
@@ -38,12 +36,9 @@ public class Seccion {
     @ManyToOne
     @JoinColumn(name = "id_profesor")
     private Profesores profesores;
-
-    @ManyToOne
-    @JoinColumn(name = "id_usuario")
-    private Usuario usuario;
-
     
     private Integer cupos;
+
+    private String modalidad;
 
 }
