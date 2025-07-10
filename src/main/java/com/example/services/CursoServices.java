@@ -64,7 +64,7 @@ public class CursoServices {
 
             if (info != null) {
                 respuesta.add(new Curso_InfoCursoResponse(
-                        curso.getId_curso(),
+                        curso.getId_curso(), // Ojito , se mapea los nombres en el record segun la posicion o orden , si yo muevo aca la posicion en mi record Curso_InfoCursoResponse tengo que hacer que coincida
                         curso.getNombre(),
                         curso.getCiclo(),
                         curso.getCarrera().getId_carrera(),
@@ -84,7 +84,8 @@ public class CursoServices {
     public Curso_InfoCursoResponse crearCursoInfoCurso(Curso_InfoCurso info) {
         try {
             // Buscar la carrera por id
-            Carrera carrera = carreraRepository.findById(info.id_carrera()).orElseThrow(() -> new RuntimeException("Carrera no encontrada"));
+            Carrera carrera = carreraRepository.findById(info.id_carrera())
+                    .orElseThrow(() -> new RuntimeException("Carrera no encontrada"));
 
             // Crear un curso
             Curso curso = new Curso();
@@ -92,7 +93,6 @@ public class CursoServices {
             curso.setCiclo(info.ciclo());
             curso.setCarrera(carrera);
             Curso cursoGuardado = cursoRepository.save(curso);
-
 
             // Crear el info del curso
             InfoCurso infoCurso = new InfoCurso();
@@ -102,9 +102,10 @@ public class CursoServices {
             infoCurso.setCurso(cursoGuardado);
             InfoCurso infoCursoGuardado = infoCursoRepository.save(infoCurso);
 
-            //Todo lo insertado lo agregamos en el record Curso_InfoCursoRespone que es lo que servira para mandarle al usuario (get , put)
+            // IMPORTANTE PORQUE DEVOLVER EN Curso_InfoCursoResponse , y es porque en el html renderizo busca el id_curso pero como yo no devuelvo nada o devuelvo Curso_InfoCurso donde alli no esta el id_curso sale undefined o null y NO aparecera en la tabla html lo que acabo de agregar
+            // porque angular dice no tiene id_curso no lo renderizo , por eso es importante una vez que se inserta devolver con Curso_InfoCursoResponse que si tiene el id_curso Todo lo insertado lo agregamos en el record Curso_InfoCursoRespone que es lo que servira para mandarle al usuario
             return new Curso_InfoCursoResponse(
-                    cursoGuardado.getId_curso(),
+                    cursoGuardado.getId_curso(), // Ojito ,se mapea los nombres en el record segun la posicion o orden si yo muevo aca la posicion en mi record Curso_InfoCursoResponse tengo que hacer que coincida
                     cursoGuardado.getNombre(),
                     cursoGuardado.getCiclo(),
                     carrera.getId_carrera(),
@@ -112,8 +113,7 @@ public class CursoServices {
                     infoCursoGuardado.getId_infoCurso(),
                     infoCursoGuardado.getHoraSemanal(),
                     infoCursoGuardado.getCredito(),
-                    infoCursoGuardado.getTipo()
-            );
+                    infoCursoGuardado.getTipo());
 
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Error al crear el curso y su información", e);
@@ -127,9 +127,9 @@ public class CursoServices {
 
         curso.setNombre(dto.nombre());
         curso.setCiclo(dto.ciclo());
-
-        Carrera carrera = carreraRepository.findById(dto.id_carrera()).orElseThrow(() -> new RuntimeException("Carrera no encontrada")); // Busca la carrera
-        curso.setCarrera(carrera);
+        Carrera carrera = carreraRepository.findById(dto.id_carrera())
+                .orElseThrow(() -> new RuntimeException("Carrera no encontrada")); // Busca la carrera
+        curso.setCarrera(carrera);// Actualiza la carrera si se cambio o no
 
         cursoRepository.save(curso);
 
@@ -146,12 +146,36 @@ public class CursoServices {
     public void eliminarCursoConInfo(Integer idCurso) {
         Curso curso = cursoRepository.findById(idCurso).orElseThrow(() -> new RuntimeException("Curso no encontrado"));
 
-        InfoCurso info = infoCursoRepository.findByCurso(curso); //Busca ese curso que tiene relacion con su info curso es decir su clave foranea
+        InfoCurso info = infoCursoRepository.findByCurso(curso); // Busca ese curso que tiene relacion con su info curso es decir su clave foranea
         if (info != null) {
-            infoCursoRepository.delete(info); //Elimina el info del curso
+            infoCursoRepository.delete(info); // Elimina el info del curso
         }
 
-        cursoRepository.delete(curso); //Elimina el curso
+        cursoRepository.delete(curso); // Elimina el curso
+    }
+
+
+    /* PARA FILTRAR POR CARRERA */
+    public List<Curso_InfoCursoResponse> buscarPorCarrera(Integer idCarrera) {
+
+        Carrera carrera = carreraRepository.findById(idCarrera).orElseThrow(() -> new RuntimeException("No existe carrera"));
+        List<Curso> cursos = cursoRepository.findByCarrera(carrera);
+
+
+        return cursos.stream().map(curso -> {
+            InfoCurso info = infoCursoRepository.findByCurso(curso); // Busca el InfoCurso asociado
+
+            return new Curso_InfoCursoResponse(
+                    curso.getId_curso(),
+                    curso.getNombre(),
+                    curso.getCiclo(),
+                    curso.getCarrera().getId_carrera(),
+                    curso.getCarrera().getNombreCarrera(),
+                    info.getId_infoCurso(),
+                    info.getHoraSemanal(),
+                    info.getCredito(),
+                    info.getTipo());
+        }).toList();
     }
 
 }
