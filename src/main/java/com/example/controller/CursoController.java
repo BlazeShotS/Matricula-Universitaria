@@ -61,7 +61,8 @@ public class CursoController {
 
     // Post para guardar tanto el curso con info curso (TRANSACTION)
     @PostMapping(value = "/completo", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity <Curso_InfoCursoResponse> insertCursoInfoCurso(@RequestBody Curso_InfoCurso curso_InfoCurso) {
+    public ResponseEntity<Curso_InfoCursoResponse> insertCursoInfoCurso(
+            @Valid @RequestBody Curso_InfoCurso curso_InfoCurso) {
         try {
             Curso_InfoCursoResponse respuesta = cursoServices.crearCursoInfoCurso(curso_InfoCurso);
             return ResponseEntity.ok(respuesta);
@@ -71,8 +72,8 @@ public class CursoController {
     }
 
     @PutMapping("editar/{id}")
-                        //Especificar el tipo esta como ?
-    public ResponseEntity<?> actualizarCursoInfoCurso(@PathVariable Integer id, @RequestBody Curso_InfoCurso request) {
+    public ResponseEntity<?> actualizarCursoInfoCurso(@PathVariable Integer id,
+            @Valid @RequestBody Curso_InfoCurso request) {
 
         try {
             cursoServices.actualizarCursoConInfo(id, request);
@@ -90,6 +91,12 @@ public class CursoController {
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Error al eliminar: " + e.getMessage());
         }
+    }
+
+    /* PARA FILTRAR POR CARRERA */
+    @GetMapping("/filtrar/{idCarrera}")
+    public ResponseEntity<List<Curso_InfoCursoResponse>> obtenerPorCarrera(@PathVariable Integer idCarrera) {
+        return ResponseEntity.ok(cursoServices.buscarPorCarrera(idCarrera));
     }
 
 }

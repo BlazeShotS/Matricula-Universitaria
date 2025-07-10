@@ -39,7 +39,7 @@ public class SeccionController {
 
     @PutMapping("actualizar/{id}")
     public Seccion actualizarSeccion(@PathVariable Integer id,@Valid @RequestBody Seccion seccion) {
-        seccion.setId_seccion(id);
+        seccion.setIdSeccion(id);
         return seccionService.actualizar(id, seccion);
     }
 

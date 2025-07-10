@@ -36,7 +36,7 @@ public class SeccionService {
     }
 
     public Seccion actualizar(Integer id, Seccion seccion) {
-        if (!seccionRepository.existsById(seccion.getId_seccion())) {
+        if (!seccionRepository.existsById(seccion.getIdSeccion())) {
             throw new RuntimeException("No se puede actualizar , la seccion no existe");
         }
         return seccionRepository.save(seccion);
