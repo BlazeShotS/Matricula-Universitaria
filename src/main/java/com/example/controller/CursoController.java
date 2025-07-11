@@ -61,10 +61,9 @@ public class CursoController {
 
     // Post para guardar tanto el curso con info curso (TRANSACTION)
     @PostMapping(value = "/completo", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Curso_InfoCursoResponse> insertCursoInfoCurso(
-            @Valid @RequestBody Curso_InfoCurso curso_InfoCurso) {
+    public ResponseEntity<Curso_InfoCursoResponse> insertCursoInfoCurso(@Valid @RequestBody Curso_InfoCurso curso_InfoCurso) {
         try {
-            Curso_InfoCursoResponse respuesta = cursoServices.crearCursoInfoCurso(curso_InfoCurso);
+            Curso_InfoCursoResponse respuesta = cursoServices.crearCursoInfoCurso(curso_InfoCurso);//LO QUE ME DEVOLVIO LO VINCULO O PONGO EN Curso_InfoCursoResponse , ya que el GET llama a eso y en angular llama al get donde estan los ids
             return ResponseEntity.ok(respuesta);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
@@ -72,8 +71,7 @@ public class CursoController {
     }
 
     @PutMapping("editar/{id}")
-    public ResponseEntity<?> actualizarCursoInfoCurso(@PathVariable Integer id,
-            @Valid @RequestBody Curso_InfoCurso request) {
+    public ResponseEntity<?> actualizarCursoInfoCurso(@PathVariable Integer id,@Valid @RequestBody Curso_InfoCurso request) {
 
         try {
             cursoServices.actualizarCursoConInfo(id, request);

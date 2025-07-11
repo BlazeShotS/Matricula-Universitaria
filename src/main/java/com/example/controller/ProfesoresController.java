@@ -48,9 +48,9 @@ public class ProfesoresController {
     }
 
     @DeleteMapping("eliminar/{id}")
-    public ResponseEntity <String> eliminarProfesor(@PathVariable Integer id){
+    public ResponseEntity <Void> eliminarProfesor(@PathVariable Integer id){
         profesoresService.eliminar(id);
-        return ResponseEntity.ok("Profesor eliminado correctamente con Id: "+id);
+        return ResponseEntity.noContent().build(); // HTTP 204, sin cuerpo
     }
 
 
