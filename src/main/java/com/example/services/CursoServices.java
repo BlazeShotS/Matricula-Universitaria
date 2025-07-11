@@ -84,8 +84,7 @@ public class CursoServices {
     public Curso_InfoCursoResponse crearCursoInfoCurso(Curso_InfoCurso info) {
         try {
             // Buscar la carrera por id
-            Carrera carrera = carreraRepository.findById(info.id_carrera())
-                    .orElseThrow(() -> new RuntimeException("Carrera no encontrada"));
+            Carrera carrera = carreraRepository.findById(info.id_carrera()).orElseThrow(() -> new RuntimeException("Carrera no encontrada"));
 
             // Crear un curso
             Curso curso = new Curso();

@@ -16,8 +16,8 @@ public class ProfesoresService {
     private final ProfesoresRepository profesoresRepository;
 
 
-     public List <Profesores> listar(){
-        return profesoresRepository.findAll();
+    public List <Profesores> listar(){
+      return profesoresRepository.findAll();
     }
 
     public Profesores insertar (Profesores profesores){

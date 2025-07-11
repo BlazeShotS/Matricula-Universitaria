@@ -44,14 +44,14 @@ public class SeccionController {
     }
 
     @DeleteMapping("eliminar/{id}")
-    public ResponseEntity<String> eliminarSeccion(@PathVariable Integer id) {
+    public ResponseEntity<Void> eliminarSeccion(@PathVariable Integer id) {
         seccionService.eliminar(id);
-        return ResponseEntity.ok("Seccion eliminado correctamente con Id: " + id);
+        return ResponseEntity.noContent().build(); // HTTP 204, sin cuerpo
     }
 
     // Post para la seccion y matricula (TRANSACTION)
     @PostMapping(value = "/completo", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity <String> insertarSeccionMatricula(@RequestBody SeccionMatriculaInfo info) {
+    public ResponseEntity <String> insertarSeccionMatricula(@RequestBody SeccionMatriculaInfo info) { //MODIFICAR ACA , YA QUE ME ESTA DEVOLVIENDO STRING
 
         try {
             seccionService.crearSeccionMatricula(info);
