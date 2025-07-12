@@ -62,7 +62,13 @@ public class AuthenticationService {
         var jwtToken = jwtService.generateToken(customUser);
         var refreshToken = jwtService.generateRefreshToken(customUser);
 
-        return new AuthenticationResponse(jwtToken, refreshToken);
+            return new AuthenticationResponse(
+                jwtToken,
+                refreshToken,
+                user.getId_usuario(),
+                user.getNombre(),
+                user.getRol().name()
+            );
 
     }
 
@@ -88,7 +94,17 @@ public class AuthenticationService {
 
         var jwtToken = jwtService.generateToken(customUser);
         var refreshToken = jwtService.generateRefreshToken(customUser);
-        return new AuthenticationResponse(jwtToken, refreshToken);
+
+        
+        return new AuthenticationResponse(
+            jwtToken,
+            refreshToken,
+            user.getId_usuario(),        // Suponiendo que tienes getId()
+            user.getNombre(),           // getNombre()
+            user.getRol().name()        // getRol()
+        );
+
+        //return new AuthenticationResponse(jwtToken, refreshToken);
 
     }
 
@@ -106,7 +122,14 @@ public class AuthenticationService {
 
             if (jwtService.isTookenValid(request.refreshToken(), customUser)) {
                 var accessToken = jwtService.generateToken(new HashMap<>(),customUser);
-                return new AuthenticationResponse(accessToken, request.refreshToken());
+                
+                return new AuthenticationResponse(
+                    accessToken,
+                    request.refreshToken(),
+                    user.getId_usuario(),
+                    user.getNombre(),
+                    user.getRol().name()
+                );
             }
         }
         throw new RuntimeException("Token de refrezco invalido");
