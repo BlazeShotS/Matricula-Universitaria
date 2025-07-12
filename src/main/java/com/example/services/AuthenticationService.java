@@ -1,14 +1,10 @@
 package com.example.services;
     
 import java.util.HashMap;
-import java.util.Map;
-import java.util.stream.Collectors;
 
-import javax.swing.Spring;
 
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -34,10 +30,9 @@ public class AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
-    // EL AuthenticationResponse VIENE DE util, AuthenticationResponse
 
-    // El RegisterRequest viene del paquete util , RegisterRequest (Registrar un usuario y se genera un token (acces y refresh)) 
-    public AuthenticationResponse register (RegisterRequest request){
+    // El RegisterRequest viene del paquete util
+    public String register (RegisterRequest request){
         var user = Usuario.builder()
             .nombre(request.firstname()) //Los nombres como .nombre() , .apellido() etc , tienen que ser los mismos de mi atributo de la entidad
             .apellido(request.lastname())
@@ -48,24 +43,14 @@ public class AuthenticationService {
             .build();
         usuarioRepository.save(user);
 
+        return "Usuario registrado exitosamente";
+        
         //ENVOLVEMOS el usuario en un CustomUser (Que implementa un UserDetails)
-        CustomUser customUser = new CustomUser(user);
-
-        /*
-        Map<String, Object> extraClaims = new HashMap<>();
-        extraClaims.put("authority", customUser.getAuthorities().stream()
-        .map(GrantedAuthority::getAuthority)
-        .collect(Collectors.toList()));
-        */
-
-        //Usamos el metodo correcto con los argumentos esperados
-        var jwtToken = jwtService.generateToken(customUser);
-        var refreshToken = jwtService.generateRefreshToken(customUser);
-
-        return new AuthenticationResponse(jwtToken, refreshToken);
+        //CustomUser customUser = new CustomUser(user);
 
     }
 
+    // EL AuthenticationResponse VIENE DE util, AuthenticationResponse
 
     // El AuthenticationRequest viene del paquete util (Al momento de iniciar sesion valida credenciales y se genera un token)
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
@@ -77,21 +62,22 @@ public class AuthenticationService {
         CustomUser customUser = new CustomUser(user);
 
         //Ponemos el customUser en los jwt , porque en nuestro jwtService esta codificado para que los token se guarden en el custonUser que envuelve la entidad Usuario, ademas para el spring security se maneja  solo con customUser
-        
-        //Esto hace que se Agrega el claim "authority": ["ADMIN"] o "RECEP" dentro del JWT. Este claim personalizado es lo que Spring Security valida cuando haces:
-        /*
-        Map<String, Object> extraClaims = new HashMap<>();
-        extraClaims.put("authority", customUser.getAuthorities().stream()
-        .map(GrantedAuthority::getAuthority)
-        .collect(Collectors.toList()));
-        */
-
         var jwtToken = jwtService.generateToken(customUser);
         var refreshToken = jwtService.generateRefreshToken(customUser);
-        return new AuthenticationResponse(jwtToken, refreshToken);
+
+        //Me retornara o devolvera esto y nuestro controlador devolvera esto al frontend
+        return new AuthenticationResponse(
+            jwtToken, //Lo que se genera
+            refreshToken, //Lo que se genera
+            //Lo que capturamos del usuario que genero sus tokens
+            user.getId_usuario(), 
+            user.getNombre(),         
+            user.getRol().name()
+        );
+
+        //return new AuthenticationResponse(jwtToken, refreshToken);
 
     }
-
 
     
     // proceso de renovacion del access token usando el refresh token 
@@ -106,7 +92,14 @@ public class AuthenticationService {
 
             if (jwtService.isTookenValid(request.refreshToken(), customUser)) {
                 var accessToken = jwtService.generateToken(new HashMap<>(),customUser);
-                return new AuthenticationResponse(accessToken, request.refreshToken());
+                
+                return new AuthenticationResponse(
+                    accessToken,
+                    request.refreshToken(),
+                    user.getId_usuario(),
+                    user.getNombre(),
+                    user.getRol().name()
+                );
             }
         }
         throw new RuntimeException("Token de refrezco invalido");
