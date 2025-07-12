@@ -64,7 +64,8 @@ public class SecurityConfig {
                     .requestMatchers("/api/seccion/**").hasAuthority("ADMIN")
 
                     
-                    .requestMatchers("/api/EstudianteUniversidad/**").permitAll()//ESto por el momento estara como permitAll , para probar
+                    .requestMatchers("/api/EstudianteUniversidad/**").hasAuthority("RECEP")
+                    
                     .anyRequest().authenticated()) // cualquier otra ruta no mencionada necesita que el usuario sea autenticado pero sin importar si es admin o client
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
