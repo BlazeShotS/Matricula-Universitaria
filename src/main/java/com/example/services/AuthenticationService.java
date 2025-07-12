@@ -1,14 +1,10 @@
 package com.example.services;
     
 import java.util.HashMap;
-import java.util.Map;
-import java.util.stream.Collectors;
 
-import javax.swing.Spring;
 
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -71,11 +67,12 @@ public class AuthenticationService {
 
         //Me retornara o devolvera esto y nuestro controlador devolvera esto al frontend
         return new AuthenticationResponse(
-            jwtToken,
-            refreshToken,
-            user.getId_usuario(),        // Suponiendo que tienes getId()
-            user.getNombre(),           // getNombre()
-            user.getRol().name()        // getRol()
+            jwtToken, //Lo que se genera
+            refreshToken, //Lo que se genera
+            //Lo que capturamos del usuario que genero sus tokens
+            user.getId_usuario(), 
+            user.getNombre(),         
+            user.getRol().name()
         );
 
         //return new AuthenticationResponse(jwtToken, refreshToken);
