@@ -18,8 +18,6 @@ public class EstudianteUniversidadService {
         this.repository=repository;
     }
 
-
-
     //Mostrar
     public List <EstudianteUniversidad>listarTodas(){
         return repository.findAll();
