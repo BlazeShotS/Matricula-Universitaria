@@ -2,6 +2,7 @@ package com.example.controller;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,36 +21,39 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-
 @RestController
-@RequestMapping(value = "api/EstudianteSistema" , produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "api/EstudianteSistema", produces = MediaType.APPLICATION_JSON_VALUE)
 @AllArgsConstructor
 public class EstudianteSistemaController {
 
     private EstudianteSistemaService estudianteSistemaService;
 
-
     @GetMapping("lista")
-    public List <EstudianteSistema> selectEstudianteSistema () {
+    public List<EstudianteSistema> selectEstudianteSistema() {
         return estudianteSistemaService.listarTodas();
     }
-    
+
     @PostMapping("insertar")
-    public EstudianteSistema insertarEstudianteSistema(@Valid @RequestBody EstudianteSistema estudianteSistema) {
-        return estudianteSistemaService.insertar(estudianteSistema);
+    public ResponseEntity<?> insertarEstudianteSistema(@Valid @RequestBody EstudianteSistema estudianteSistema) {       
+        try {
+            EstudianteSistema nuevo = estudianteSistemaService.insertar(estudianteSistema);
+            return ResponseEntity.status(HttpStatus.CREATED).body(nuevo);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
     }
 
-
     @PutMapping("actualizar/{id}")
-    public EstudianteSistema actualizarEstudianteSistema (@PathVariable Integer id,@Valid @RequestBody EstudianteSistema estudianteSistema) {
+    public EstudianteSistema actualizarEstudianteSistema(@PathVariable Integer id,
+            @Valid @RequestBody EstudianteSistema estudianteSistema) {
         estudianteSistema.setCodigo_estudiante(id);
         return estudianteSistemaService.actualizar(id, estudianteSistema);
     }
-    
+
     @DeleteMapping("eliminar/{id}")
-    public ResponseEntity <String> eliminarEstudianteSistema (@PathVariable Integer id){
+    public ResponseEntity<String> eliminarEstudianteSistema(@PathVariable Integer id) {
         estudianteSistemaService.eliminar(id);
-        return ResponseEntity.ok("Estudiante eliminado de la universidad correctamente: "+id);
+        return ResponseEntity.ok("Estudiante eliminado de la universidad correctamente: " + id);
     }
 
 }

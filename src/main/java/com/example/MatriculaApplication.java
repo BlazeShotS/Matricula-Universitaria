@@ -23,7 +23,7 @@ public class MatriculaApplication {
 	CommandLineRunner commandLineRunner (UsuarioRepository usuarioRepository, PasswordEncoder encoder){
 		return args -> {
 			System.out.println("Creando usuario");
-			if (usuarioRepository.findByCorreo("abel@gmail.com").isEmpty()) { //Ponemos la condicional para ver si exite  no lo crea , pero si no exite lo crea en la databse
+			if (usuarioRepository.findByCorreo("durand@gmail.com").isEmpty()) { //Ponemos la condicional para ver si exite  no lo crea , pero si no exite lo crea en la databse
 				Usuario usuario = new Usuario();
 				usuario.setTelefono("123456789");
 				usuario.setApellido("durand");
