@@ -62,9 +62,9 @@ public class SecurityConfig {
                     .requestMatchers("/api/carrera/**").hasAuthority("ADMIN")
                     .requestMatchers("/api/curso/**").hasAuthority("ADMIN")
                     .requestMatchers("/api/seccion/**").hasAuthority("ADMIN")
-
-                    
                     .requestMatchers("/api/EstudianteUniversidad/**").hasAuthority("RECEP")
+                    .requestMatchers("/api/EstudianteSistema/**").permitAll()
+
                     
                     .anyRequest().authenticated()) // cualquier otra ruta no mencionada necesita que el usuario sea autenticado pero sin importar si es admin o client
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
