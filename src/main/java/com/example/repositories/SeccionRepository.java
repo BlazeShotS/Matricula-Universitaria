@@ -10,5 +10,4 @@ public interface SeccionRepository extends JpaRepository <Seccion,Integer>{
 
     Optional<Seccion> findByAulaAndHorario(String aula, String horario);
 
-
 }

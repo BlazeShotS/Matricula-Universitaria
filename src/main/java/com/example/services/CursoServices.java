@@ -158,7 +158,7 @@ public class CursoServices {
     public List<Curso_InfoCursoResponse> buscarPorCarrera(Integer idCarrera) {
 
         Carrera carrera = carreraRepository.findById(idCarrera).orElseThrow(() -> new RuntimeException("No existe carrera"));
-        List<Curso> cursos = cursoRepository.findByCarrera(carrera);
+        List<Curso> cursos = cursoRepository.findByCarrera(carrera);//manda la carrera , para filtrar esa carrera en especifico
 
 
         return cursos.stream().map(curso -> {

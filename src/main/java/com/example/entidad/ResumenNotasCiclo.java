@@ -34,12 +34,14 @@ public class ResumenNotasCiclo {
 
     private Integer periodo;
     
+    //La lectura de relacion , se hace desde la misma entidad, en aca se lee muchos ResumenNotasCiclo pertenecen a una carrera
     @ManyToOne
     @JoinColumn(name = "id_carrera")
     //@JsonIgnoreProperties({"nombre_carrera"}) //OJO CUANDO HAGA INSERT , COMO RESPUESTA NUNCA SE MOSTRARAN LOS DATOS DEL FK MAS QUE EL ID PORQUE SE INSERTA (A MENOS QUE MODIFIQUE EL CONTROLADOR EL METODO INSERT),
     //SIN PONER @JsonIgnoreProperties o @JsonIgnore si se muestran los datos del fk en GET y PUT porque una vez insertado internamente si esta bien la relacion de @ManyToOne etc busca esa relacion y une todo esos datos o informacion al hacer un findAll o finById o ExistById etc
     private Carrera carrera;
 
+    //Se lee muchos ResumenNotasCiclo pertenece a un estudiante sistema
     @ManyToOne
     @JoinColumn(name="codigo_estudiante")
     //@JsonIgnoreProperties({})

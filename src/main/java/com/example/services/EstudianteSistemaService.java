@@ -24,6 +24,7 @@ public class EstudianteSistemaService {
         return estudianteSistemaRepository.findAll();
     }
 
+    //PARA CUANDO EL ESTUDIANTE SE REGISTRA , VALIDA SI ESTA SU DNI EN LA BASE DE DATOS
     public EstudianteSistema insertar (EstudianteSistema estudianteSistema){
         
         Integer dni = estudianteSistema.getEstudiante_Universidad().getDni_estudiante();
@@ -43,6 +44,7 @@ public class EstudianteSistemaService {
         return estudianteSistemaRepository.save(estudianteSistema);
     }
 
+    
     public EstudianteSistema obtenerPorCodigoEstudiante (Integer codigo_estudiante){
         return estudianteSistemaRepository.findById(codigo_estudiante).orElseThrow();
     }

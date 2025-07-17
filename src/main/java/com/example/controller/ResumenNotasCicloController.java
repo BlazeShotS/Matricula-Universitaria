@@ -20,9 +20,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-
-
-
 @RestController
 @RequestMapping (value = "api/resumen", produces = MediaType.APPLICATION_JSON_VALUE)
 @AllArgsConstructor
