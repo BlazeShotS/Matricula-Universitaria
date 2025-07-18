@@ -9,7 +9,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.example.entidad.Carrera;
 import com.example.entidad.Curso;
-import com.example.entidad.Curso_InfoCurso;
+import com.example.entidad.Curso_InfoCursoRequest;
 import com.example.entidad.Curso_InfoCursoResponse;
 import com.example.entidad.InfoCurso;
 import com.example.repositories.CarreraRepository;
@@ -60,7 +60,7 @@ public class CursoServices {
         List<Curso_InfoCursoResponse> respuesta = new ArrayList<>();
 
         for (Curso curso : cursos) {
-            InfoCurso info = infoCursoRepository.findByCurso(curso); // Consulta InfoCurso por curso
+            InfoCurso info = infoCursoRepository.findByCurso(curso); // Consulta InfoCurso por curso ,para unirlo se podria decir
 
             if (info != null) {
                 respuesta.add(new Curso_InfoCursoResponse(
@@ -81,7 +81,7 @@ public class CursoServices {
 
     /* PARA POST , USA EL RECORD Curso_Infocurso */
     @Transactional
-    public Curso_InfoCursoResponse crearCursoInfoCurso(Curso_InfoCurso info) {
+    public Curso_InfoCursoResponse crearCursoInfoCurso(Curso_InfoCursoRequest info) {
         try {
             // Buscar la carrera por id
             Carrera carrera = carreraRepository.findById(info.id_carrera()).orElseThrow(() -> new RuntimeException("Carrera no encontrada"));
@@ -121,7 +121,7 @@ public class CursoServices {
 
     // PARA PUT , USA EL RECORD Curso
     @Transactional
-    public void actualizarCursoConInfo(Integer idCurso, Curso_InfoCurso dto) {
+    public void actualizarCursoConInfo(Integer idCurso, Curso_InfoCursoRequest dto) {
         Curso curso = cursoRepository.findById(idCurso).orElseThrow(() -> new RuntimeException("Curso no encontrado")); // Busca el curso
 
         curso.setNombre(dto.nombre());

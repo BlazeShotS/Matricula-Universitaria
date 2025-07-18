@@ -8,7 +8,9 @@ public record EstudianteLoginResponse(
     String carreraNombre,
     Integer periodoActual,
     Integer periodoMatricula,
-    List<Curso> cursos
+    //List<Curso> cursos
+    List<InfoCurso> cursos // ahora devolvemos InfoCurso
+
 ) {
     
 }

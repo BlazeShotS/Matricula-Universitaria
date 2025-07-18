@@ -8,10 +8,13 @@ import org.springframework.stereotype.Service;
 
 import com.example.entidad.Carrera;
 import com.example.entidad.Curso;
+import com.example.entidad.EstudianteLoginResponse;
 import com.example.entidad.EstudianteSistema;
+import com.example.entidad.InfoCurso;
 import com.example.entidad.ResumenNotasCiclo;
 import com.example.repositories.CursoRepository;
 import com.example.repositories.EstudianteSistemaRepository;
+import com.example.repositories.InfoCursoRepository;
 import com.example.repositories.ResumenNotasCicloRepository;
 
 import jakarta.servlet.http.HttpSession;
@@ -24,8 +27,9 @@ public class EstudianteLoginService {
     private final EstudianteSistemaRepository estudianteSistemaRepository;
     private final ResumenNotasCicloRepository resumenNotasCicloRepository;
     private final CursoRepository cursoRepository;
+    private final InfoCursoRepository infoCursoRepository;
 
-    public Map<String, Object> loginYObtenerCursos(Integer codigo, String password, HttpSession session) {
+    public EstudianteLoginResponse loginYObtenerCursos(Integer codigo, String password, HttpSession session) {
         //Validar credenciales
         EstudianteSistema estudiante = estudianteSistemaRepository.login(codigo, password).orElseThrow(() -> new RuntimeException("Credenciales incorrectas"));
 
@@ -53,16 +57,18 @@ public class EstudianteLoginService {
         //Traer cursos de esa carrera SOLO del nuevo ciclo
         List<Curso> cursos = cursoRepository.findByCarreraAndCiclo(carrera, nuevoPeriodo);
 
-        // Armar respuesta simple para Angular
-        Map<String, Object> resp = new HashMap<>();
-        resp.put("codigo_estudiante", estudiante.getCodigo_estudiante());
-        resp.put("carreraId", carrera.getId_carrera());
-        resp.put("carreraNombre", carrera.getNombreCarrera());
-        resp.put("periodoActual", ultimoPeriodo);
-        resp.put("periodoMatricula", nuevoPeriodo);
-        resp.put("cursos", cursos);
+        // Obtener info completa de esos cursos
+        List<InfoCurso> infoCursos = infoCursoRepository.findByCursoIn(cursos);
 
-        return resp;
+        // Armar respuesta simple para Angular
+         return new EstudianteLoginResponse(
+                estudiante.getCodigo_estudiante(),
+                carrera.getId_carrera(),
+                carrera.getNombreCarrera(),
+                ultimoPeriodo,
+                nuevoPeriodo,
+                infoCursos
+        );
     }
 
 }

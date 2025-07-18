@@ -7,7 +7,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
-public record Curso_InfoCurso(
+public record Curso_InfoCursoRequest(
 
     //ACA VALIDAREMOS ,  NO EN LAS ENTIDADES PORQUE NUESTRO POST Y PUT USAN ESTE RECORD
 

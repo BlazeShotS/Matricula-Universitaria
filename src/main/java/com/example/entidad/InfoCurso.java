@@ -27,7 +27,7 @@ public class InfoCurso {
     private String tipo;
 
     @OneToOne
-    @JoinColumn(name = "id_curso") //Nombre de la columna de esta tabla InfoCurso , si quieres tener la referencia de la otra tabla se agrega el referencedColumnName = ""
+    @JoinColumn(name = "id_curso") //Nombre de la columna de esta tabla InfoCurso , si quiero tener la referencia de la otra tabla se agrega el referencedColumnName = ""
     private Curso curso;
 
 }

@@ -8,8 +8,10 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.example.entidad.EstudianteLoginRequest;
+import com.example.entidad.EstudianteLoginResponse;
 import com.example.services.EstudianteLoginService;
-import com.example.util.AuthenticationEstudianteRequest;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
@@ -24,15 +26,10 @@ public class EstudianteLoginController {
     private final EstudianteLoginService loginService;
 
       @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody AuthenticationEstudianteRequest req, HttpSession session) {
+     public ResponseEntity<?> login(@RequestBody EstudianteLoginRequest req, HttpSession session) {
         try {
-            // Llamar al service (que devolverá Map o un record de respuesta)
-            Map<String, Object> result = loginService.loginYObtenerCursos(
-                    req.codigo(),
-                    req.password(),
-                    session
-            );
-            return ResponseEntity.ok(result);
+            EstudianteLoginResponse resp = loginService.loginYObtenerCursos(req.codigo(), req.password(), session);
+            return ResponseEntity.ok(resp);
         } catch (RuntimeException ex) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
         }
