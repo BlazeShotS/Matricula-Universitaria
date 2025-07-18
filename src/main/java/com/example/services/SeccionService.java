@@ -22,9 +22,7 @@ import lombok.AllArgsConstructor;
 public class SeccionService {
 
     private final SeccionRepository seccionRepository;
-
     private final MatriculaRepository matriculaRepository;
-
     private final EstudianteSistemaRepository estudianteSistemaRepository;
 
     public List<Seccion> listar() {
@@ -42,14 +40,14 @@ public class SeccionService {
         return seccionRepository.save(seccion);
     }
 
-    // Ponemos void porque void no devuelve nada, es decir este metodo hace algo
-    // pero no se espera una respuesta de el
     public void eliminar(Integer id) {
         if (!seccionRepository.existsById(id)) {
             throw new RuntimeException("La seccion con el id: " + id + " no existe");
         }
         seccionRepository.deleteById(id);
     }
+
+
 
     @Transactional
     public void crearSeccionMatricula(SeccionMatriculaInfo info) {

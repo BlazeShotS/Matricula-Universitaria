@@ -35,6 +35,7 @@ public class EstudianteSistema {
     @NotBlank(message="Ingrese una contraseña")
     private String password;
 
+    //Un EstudianteSistema pertenece a un EstudianteUniversidad
     @OneToOne
     @JoinColumn (name = "dni_estudiante")
     //@JsonIgnoreProperties(value={"nombre", "apellido", "correo", "carrera", "telefono", "fecha_registro","usuario"})

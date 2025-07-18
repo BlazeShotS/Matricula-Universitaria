@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.entidad.Curso;
-import com.example.entidad.Curso_InfoCurso;
+import com.example.entidad.Curso_InfoCursoRequest;
 import com.example.entidad.Curso_InfoCursoResponse;
 import com.example.services.CursoServices;
 
@@ -51,17 +51,18 @@ public class CursoController {
         return ResponseEntity.ok("Carrera eliminado correctamente con Id: " + id);
     }
 
-    /*-------------------PARA TRANSACTION-----------------------------*/
+    /*--------------------------PARA TRANSACTION-----------------------------*/
 
+    //Para el get uso el record Curso_InfoCursoResponse
     @GetMapping("/listar")
     public ResponseEntity<List<Curso_InfoCursoResponse>> listarCursoInfoCurso() {
         List<Curso_InfoCursoResponse> lista = cursoServices.listarCursosConInfo();
         return ResponseEntity.ok(lista);
     }
 
-    // Post para guardar tanto el curso con info curso (TRANSACTION)
+    // Post para guardar tanto el curso con info curso (TRANSACTION), uso el record Curso_InfoCurso
     @PostMapping(value = "/completo", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Curso_InfoCursoResponse> insertCursoInfoCurso(@Valid @RequestBody Curso_InfoCurso curso_InfoCurso) {
+    public ResponseEntity<Curso_InfoCursoResponse> insertCursoInfoCurso(@Valid @RequestBody Curso_InfoCursoRequest curso_InfoCurso) {
         try {
             Curso_InfoCursoResponse respuesta = cursoServices.crearCursoInfoCurso(curso_InfoCurso);//LO QUE ME DEVOLVIO LO VINCULO O PONGO EN Curso_InfoCursoResponse , ya que el GET llama a eso y en angular llama al get donde estan los ids
             return ResponseEntity.ok(respuesta);
@@ -71,7 +72,7 @@ public class CursoController {
     }
 
     @PutMapping("editar/{id}")
-    public ResponseEntity<?> actualizarCursoInfoCurso(@PathVariable Integer id,@Valid @RequestBody Curso_InfoCurso request) {
+    public ResponseEntity<?> actualizarCursoInfoCurso(@PathVariable Integer id,@Valid @RequestBody Curso_InfoCursoRequest request) {
 
         try {
             cursoServices.actualizarCursoConInfo(id, request);

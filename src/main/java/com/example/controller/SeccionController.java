@@ -48,6 +48,8 @@ public class SeccionController {
         seccionService.eliminar(id);
         return ResponseEntity.noContent().build(); // HTTP 204, sin cuerpo
     }
+   
+
 
     // Post para la seccion y matricula (TRANSACTION)
     @PostMapping(value = "/completo", consumes = MediaType.APPLICATION_JSON_VALUE)

@@ -15,11 +15,9 @@ public class ResumenNotasCicloService {
 
     private final ResumenNotasCicloRepository resumenNotasCicloRepository;
 
-
     public List <ResumenNotasCiclo> listar() {
         return resumenNotasCicloRepository.findAll();
     }
-
 
     public ResumenNotasCiclo insertar (ResumenNotasCiclo resumenNotasCiclo){
         return resumenNotasCicloRepository.save(resumenNotasCiclo);
@@ -32,14 +30,11 @@ public class ResumenNotasCicloService {
         return resumenNotasCicloRepository.save(resumenNotasCiclo);
     }
     
-
     public void eliminar(Integer id){
         if (!resumenNotasCicloRepository.existsById(id)) {
             throw new RuntimeException("No se encontrol el resumen de notas del ciclo: "+id);
         }
         resumenNotasCicloRepository.deleteById(id);
     }
-
-
 
 }
