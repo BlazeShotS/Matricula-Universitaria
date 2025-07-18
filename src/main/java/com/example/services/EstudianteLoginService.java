@@ -3,11 +3,13 @@ package com.example.services;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
 import com.example.entidad.Carrera;
 import com.example.entidad.Curso;
+import com.example.entidad.CursoConInfoResponse;
 import com.example.entidad.EstudianteLoginResponse;
 import com.example.entidad.EstudianteSistema;
 import com.example.entidad.InfoCurso;
@@ -29,8 +31,9 @@ public class EstudianteLoginService {
     private final CursoRepository cursoRepository;
     private final InfoCursoRepository infoCursoRepository;
 
+
     public EstudianteLoginResponse loginYObtenerCursos(Integer codigo, String password, HttpSession session) {
-        //Validar credenciales
+
         EstudianteSistema estudiante = estudianteSistemaRepository.login(codigo, password).orElseThrow(() -> new RuntimeException("Credenciales incorrectas"));
 
         //Guardar código en sesión
@@ -57,18 +60,31 @@ public class EstudianteLoginService {
         //Traer cursos de esa carrera SOLO del nuevo ciclo
         List<Curso> cursos = cursoRepository.findByCarreraAndCiclo(carrera, nuevoPeriodo);
 
-        // Obtener info completa de esos cursos
-        List<InfoCurso> infoCursos = infoCursoRepository.findByCursoIn(cursos);
+        
+        //InfoCurso en batch
+        List<InfoCurso> infos = cursos.isEmpty()
+            ? List.of()
+            : infoCursoRepository.findByCursoIn(cursos);//Busca de Curso  su infoCurso
 
-        // Armar respuesta simple para Angular
-         return new EstudianteLoginResponse(
-                estudiante.getCodigo_estudiante(),
-                carrera.getId_carrera(),
-                carrera.getNombreCarrera(),
-                ultimoPeriodo,
-                nuevoPeriodo,
-                infoCursos
+        //Mapear InfoCurso por idCurso
+        Map<Integer, InfoCurso> infoMap = infos.stream().collect(Collectors.toMap(ic -> ic.getCurso().getId_curso(), ic -> ic));
+
+        //Convertir a DTO
+        List<CursoConInfoResponse> cursosResp = cursos.stream()
+            .map(c -> CursoConInfoResponse.of(c, infoMap.get(c.getId_curso())))
+            .toList();
+
+        //Construir respuesta
+        return new EstudianteLoginResponse(
+            estudiante.getCodigo_estudiante(), //Apunta a los atributos de mi record, si modifico el orden en mi record tambien
+            carrera.getId_carrera(),
+            carrera.getNombreCarrera(),
+            ultimoPeriodo,
+            nuevoPeriodo,
+            cursosResp
         );
     }
+
+    
 
 }
