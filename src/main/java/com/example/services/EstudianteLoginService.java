@@ -1,6 +1,5 @@
 package com.example.services;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -14,10 +13,12 @@ import com.example.entidad.EstudianteLoginResponse;
 import com.example.entidad.EstudianteSistema;
 import com.example.entidad.InfoCurso;
 import com.example.entidad.ResumenNotasCiclo;
+import com.example.entidad.Seccion;
 import com.example.repositories.CursoRepository;
 import com.example.repositories.EstudianteSistemaRepository;
 import com.example.repositories.InfoCursoRepository;
 import com.example.repositories.ResumenNotasCicloRepository;
+import com.example.repositories.SeccionRepository;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
@@ -29,9 +30,11 @@ public class EstudianteLoginService {
     private final EstudianteSistemaRepository estudianteSistemaRepository;
     private final ResumenNotasCicloRepository resumenNotasCicloRepository;
     private final CursoRepository cursoRepository;
-    private final InfoCursoRepository infoCursoRepository;
+    private final SeccionRepository seccionRepository;
+    private final InfoCursoRepository infoCursoRepository;    
 
 
+    /*----------------Para el estudiante cuando inicia sesion se mostrara los cursos como la info del curso especifico-------------- */
     public EstudianteLoginResponse loginYObtenerCursos(Integer codigo, String password, HttpSession session) {
 
         EstudianteSistema estudiante = estudianteSistemaRepository.login(codigo, password).orElseThrow(() -> new RuntimeException("Credenciales incorrectas"));
@@ -69,7 +72,7 @@ public class EstudianteLoginService {
         //Mapear InfoCurso por idCurso
         Map<Integer, InfoCurso> infoMap = infos.stream().collect(Collectors.toMap(ic -> ic.getCurso().getId_curso(), ic -> ic));
 
-        //Convertir a DTO
+        //Convertir a DTO, union personalizada de Curso con InfoCurso , mapeo en el record , los metodos personalizados de mi Curso e InfoCurso
         List<CursoConInfoResponse> cursosResp = cursos.stream()
             .map(c -> CursoConInfoResponse.of(c, infoMap.get(c.getId_curso())))
             .toList();
@@ -81,10 +84,20 @@ public class EstudianteLoginService {
             carrera.getNombreCarrera(),
             ultimoPeriodo,
             nuevoPeriodo,
-            cursosResp
+            cursosResp //Curso e InfoCurso
         );
     }
 
+
+    //Captura el idCurso y muestra las secciones
+    public List<Seccion> listarPorCurso(Integer idCurso) {
+        // Si quieres validar que el curso exista:
+        Curso curso = cursoRepository.findById(idCurso)
+            .orElseThrow(() -> new RuntimeException("Curso no encontrado: " + idCurso));
+
+        // Forma por objeto
+        return seccionRepository.findByCurso(curso);
+    }
     
 
 }

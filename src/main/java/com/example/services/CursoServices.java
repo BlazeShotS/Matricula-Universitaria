@@ -51,7 +51,7 @@ public class CursoServices {
         cursoRepository.deleteById(id);
     }
 
-    /*----------------------------------------------------------------------- */
+    /*----------------------------------ADMIN-----------------------------------------*/
 
     /* PARA GET , USA EL RECORD Curso_InfoCursoResponse */
     public List<Curso_InfoCursoResponse> listarCursosConInfo() {

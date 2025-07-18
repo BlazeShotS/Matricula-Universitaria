@@ -1,5 +1,5 @@
 package com.example.entidad;
-
+//Creacion de un record de respuesta personalizada de Curso e InfoCurso
 public record CursoConInfoResponse(
     Integer idCurso,
     String nombre,
