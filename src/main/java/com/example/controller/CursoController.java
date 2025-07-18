@@ -51,15 +51,16 @@ public class CursoController {
         return ResponseEntity.ok("Carrera eliminado correctamente con Id: " + id);
     }
 
-    /*-------------------PARA TRANSACTION-----------------------------*/
+    /*--------------------------PARA TRANSACTION-----------------------------*/
 
+    //Para el get uso el record Curso_InfoCursoResponse
     @GetMapping("/listar")
     public ResponseEntity<List<Curso_InfoCursoResponse>> listarCursoInfoCurso() {
         List<Curso_InfoCursoResponse> lista = cursoServices.listarCursosConInfo();
         return ResponseEntity.ok(lista);
     }
 
-    // Post para guardar tanto el curso con info curso (TRANSACTION)
+    // Post para guardar tanto el curso con info curso (TRANSACTION), uso el record Curso_InfoCurso
     @PostMapping(value = "/completo", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Curso_InfoCursoResponse> insertCursoInfoCurso(@Valid @RequestBody Curso_InfoCurso curso_InfoCurso) {
         try {
