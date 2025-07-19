@@ -1,15 +1,7 @@
 package com.example.entidad;
 
 
-import java.time.LocalDateTime;
-
-import org.springframework.format.annotation.DateTimeFormat;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -30,7 +22,6 @@ public class EstudianteUniversidad {
     //@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer dni_estudiante;
 
-    
     @NotNull
     @NotBlank(message="Ingrese un nombre")
     @Pattern(regexp = "\\D*",message="No puede contener numeros")

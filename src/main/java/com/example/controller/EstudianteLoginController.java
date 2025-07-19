@@ -7,12 +7,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.example.entidad.EstudianteLoginRequest;
 import com.example.entidad.EstudianteLoginResponse;
 import com.example.entidad.Seccion;
 import com.example.entidad.procesar.matricula.MatriculaRequest;
 import com.example.entidad.procesar.matricula.MatriculaResponse;
+import com.example.repositories.SeccionRepository;
 import com.example.services.EstudianteLoginService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 public class EstudianteLoginController {
 
     private final EstudianteLoginService loginService;
+    private final SeccionRepository seccionRepository;
 
     // Cuando inicia sesion el estudiante
     @PostMapping("/login")
@@ -45,8 +48,7 @@ public class EstudianteLoginController {
         return ResponseEntity.ok(secciones);
     }
 
-
-    //PROCESAR MATRICULA
+    // PROCESAR MATRICULA
     @PostMapping("/procesar")
     public ResponseEntity<?> procesar(@RequestBody MatriculaRequest request) {
         try {
@@ -59,8 +61,18 @@ public class EstudianteLoginController {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(Map.of("error", e.getMessage()));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(Map.of("error", "Error interno: " + e.getMessage()));
+                    .body(Map.of("error", "Error interno: " + e.getMessage()));
         }
+    }
+
+    //PARA EL GET , ME LLEGAN LOS ID SECCION Y ID MATRICULAS , DEVUELVO TODO LOS ID SECCION
+    @GetMapping("/secciones/by-ids")
+    public ResponseEntity<List<Seccion>> getSeccionesByIds(@RequestParam("ids") List<Integer> ids) {
+        if (ids == null || ids.isEmpty()) {
+            return ResponseEntity.ok(List.of());
+        }
+        List<Seccion> secciones = seccionRepository.findAllById(ids);
+        return ResponseEntity.ok(secciones);
     }
 
 }
