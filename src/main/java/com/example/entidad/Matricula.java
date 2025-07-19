@@ -29,16 +29,12 @@ public class Matricula {
     @JoinColumn(name="codigo_estudiante")
     private EstudianteSistema estudianteSistema;
 
-
     @ManyToOne
     @JoinColumn(name = "id_seccion")
     private Seccion seccion;
 
-
-
     @NotNull(message = "Ingrese la fecha de matrícula")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate fecha_matricula;
-
 
 }

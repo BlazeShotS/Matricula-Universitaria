@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.entidad.Seccion;
-import com.example.entidad.SeccionMatriculaInfo;
 import com.example.services.SeccionService;
 
 import jakarta.validation.Valid;
@@ -47,20 +46,6 @@ public class SeccionController {
     public ResponseEntity<Void> eliminarSeccion(@PathVariable Integer id) {
         seccionService.eliminar(id);
         return ResponseEntity.noContent().build(); // HTTP 204, sin cuerpo
-    }
-   
-
-
-    // Post para la seccion y matricula (TRANSACTION)
-    @PostMapping(value = "/completo", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity <String> insertarSeccionMatricula(@RequestBody SeccionMatriculaInfo info) { //MODIFICAR ACA , YA QUE ME ESTA DEVOLVIENDO STRING
-
-        try {
-            seccionService.crearSeccionMatricula(info);
-            return ResponseEntity.ok("Matrícula registrada correctamente");
-        } catch (RuntimeException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
     }
 
 }
