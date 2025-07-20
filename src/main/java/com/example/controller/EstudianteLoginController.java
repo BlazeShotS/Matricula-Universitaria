@@ -41,7 +41,7 @@ public class EstudianteLoginController {
         }
     }
 
-    // Para mostrar todas las secciones de ese curso
+    // PARA MOSTRAR TODAS LAS SECCIONES DE ESE CURSO
     @GetMapping("/curso/{idCurso}")
     public ResponseEntity<List<Seccion>> getSeccionesPorCurso(@PathVariable Integer idCurso) {
         List<Seccion> secciones = loginService.listarPorCurso(idCurso);
