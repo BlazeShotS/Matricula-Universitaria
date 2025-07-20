@@ -44,10 +44,10 @@ public class EstudianteLoginService {
     /*--------------------------Para el estudiante cuando inicia sesion se mostrara los cursos como la info del curso especifico-------------- */
     public EstudianteLoginResponse loginYObtenerCursos(Integer codigo, String password) {
 
-        EstudianteSistema estudiante = estudianteSistemaRepository.login(codigo, password)
+        EstudianteSistema estudiante = estudianteSistemaRepository.login(codigo, password) //Valida el codigo y password de la database
                 .orElseThrow(() -> new RuntimeException("Credenciales incorrectas"));
 
-        // Obtener último resumen del estudiante (con periodo + carrera)
+        // Obtener último resumen del estudiante (con periodo + carrera), ACA ES DONDE BUSCA ESE ESTUDIANTE EL RESUMEN NOTAS CICLO CUANDO INICIA SESION si no lo encuentra lanza error tambien
         var ultimoResumenOpt = resumenNotasCicloRepository.findTopByEstudianteSistemaOrderByPeriodoDesc(estudiante);
 
         if (ultimoResumenOpt.isEmpty()) {
